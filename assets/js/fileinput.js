@@ -529,7 +529,6 @@
                 '</div>';
             tSize = ' <samp>({sizeText})</samp>';
             tFooter = '<div class="file-thumbnail-footer">\n' +
-                '    <textarea id="caption" placeholder="Enter caption ..." name="caption[]" rows="4" cols="50" class="file-caption"></textarea>\n' +
                 '    <div class="file-footer-caption" title="{caption}">{caption}<br>{size}</div>\n' +
                 '    {progress} {actions}\n' +
                 '</div>';
