@@ -87,15 +87,14 @@ class SAP_BotsLogs
         if(! $this->db->exists('sap_bots','id',[
             'id' => $data['bot_id'],
         ])) {
-            $botId = $data['bot_id'];
-            $bot = $this->db->get_row("SELECT * FROM sap_bots WHERE JSON_CONTAINS(pages, '\"$botId\"')",true);
-            if(empty($bot)) {
+//            $botId = $data['bot_id'];
+//            $bot = $this->db->get_row("SELECT * FROM sap_bots WHERE JSON_CONTAINS(pages, '\"$botId\"')",true);
+//            if(empty($bot)) {
                 REST([
-                    'error' => "Bot not found with pages $botId",
+                    'error' => "Bot not found with pages",
                 ]);
-                return false;
-            }
-            $data['bot_id'] = $bot->id;
+//            }
+//            $data['bot_id'] = $bot->id;
         }
         $data['data_json'] = array_filter($data['data_json']);
         $data['data_json'] = json_encode($data['data_json']);
