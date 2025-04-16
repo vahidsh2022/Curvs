@@ -123,8 +123,14 @@ class SAP_BotsLogs
     private function getData()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        if(! is_array($data)) {
+            $data = $_POST;
+        }
+        if(! is_array($data)) {
+            $data = [];
+        }
         $factory = getValidator();
-        return $factory->validate(is_array($data) ? $data : [], [
+        return $factory->validate($data, [
             'bot_id' => ['bail', 'required'],
             'identifier' => ['required','string'],
             'message' => ['nullable','string'],
