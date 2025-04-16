@@ -156,7 +156,6 @@ class SAP_Quick_Posts
 	{
 		//Check form submit request
 		if (true) {
-
 			//Call Upload class and upload media
 			$fileUpload = new FileUploader(array());
 			$validate_size = 1;
@@ -227,6 +226,8 @@ class SAP_Quick_Posts
                     $validate_size = 1;
                 } else {
                     $_POST['image'] = '';
+                    $_POST['video'] = '';
+                    $_POST['media'] = json_encode([]);
                 }
             } else if (!empty($_FILES['media']['name']) && !empty($_FILES['media']['name'][0])) {
                 $media = [];
@@ -239,7 +240,7 @@ class SAP_Quick_Posts
                     $uploadPath = $fileUpload->uploadFileFromFile($fileMedia);
                     $media[] = [
                         'src' => $uploadPath,
-                        'caption' => '', // TODO: MUST SET CAPTION
+                        'caption' => $_POST['caption'][$index] ?? '', // TODO: MUST SET CAPTION
                     ];
                 }
                 $_POST['media'] = json_encode($media);

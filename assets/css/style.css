@@ -3787,7 +3787,7 @@ ul.treeview-menu li a i::before {
 }
 
 ul.treeview-menu .active a {
-    background-color: #4376f3 !important;
+    background-color: #d0d0ff;
 }
 
 .treeview-menu {

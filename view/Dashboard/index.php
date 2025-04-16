@@ -35,26 +35,30 @@ $cpgs = $this->getCpgs();
     <section id="dashboard_section" class="content sap-quick-post">
         <div class="container">
             <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php eLang('shortcuts'); ?></h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-3">
-                                <a href="<?php echo $router->generate('settings'); ?>" class="btn btn-primary"><?php eLang('new_account'); ?></a>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-3">
-                                <a href="<?php echo $router->generate('quick_posts_add'); ?>" class="btn btn-primary"><?php eLang('new_post'); ?></a>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-3">
-                                <a href="<?php echo $router->generate('crawlers_add'); ?>" class="btn btn-primary"><?php eLang('new_crawler'); ?></a>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-3">
-                                <a href="<?php echo $router->generate('bots_add'); ?>" class="btn btn-primary"><?php eLang('new_crowd'); ?></a>
-                            </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php eLang('shortcuts'); ?></h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <a href="<?php echo $router->generate('settings'); ?>"
+                               class="btn btn-primary"><?php eLang('new_account'); ?></a>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <a href="<?php echo $router->generate('quick_posts_add'); ?>"
+                               class="btn btn-primary"><?php eLang('new_post'); ?></a>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <a href="<?php echo $router->generate('crawlers_add'); ?>"
+                               class="btn btn-primary"><?php eLang('new_crawler'); ?></a>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <a href="<?php echo $router->generate('bots_add'); ?>"
+                               class="btn btn-primary"><?php eLang('new_crowd'); ?></a>
                         </div>
                     </div>
                 </div>
+            </div>
             <div class="light-background">
                 <div class="row">
                     <?php echo $this->flash->renderFlash(); ?>
@@ -80,19 +84,40 @@ $cpgs = $this->getCpgs();
                         </div>
                         <div class="post-wrapper-one">
                             <?php foreach ($this->limitPosts($posts) as $post) { ?>
-                                <div class="post-item">
+                            <div class="post-item">
+                                <?php if (!empty($post->image)) { ?>
+                                    <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
+                                         alt="Post Image single">
+                                <?php } else if (!empty($post->video)) { ?>
+                                    <video width="auto" height="100%" controls aria-label="video single">
+                                        <source src="<?php echo SAP_IMG_URL . $post->video; ?>" type="video/mp4">
+                                    </video>
+                                <?php } else if (!empty($post->media) && !empty(json_decode($post->media, true))) {
+                                $firstMedia = SAP_IMG_URL . json_decode($post->media, true)[0]['src'];
+                                if (mediaIsImage($firstMedia)) {
+                                    ?>
                                     <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
                                          alt="Post Image">
-                                    <div class="post-content">
-                                        <p class="fw-bold">
-                                            <a href='<?php echo $router->generate('quick_viewpost',['id'=>$post->post_id]); ?>'><?php echo $post->message ?></a>
-                                        </p>
-                                        <div class="date-time">
-                                            <?php echo $post->created_date ?>
-                                        </div>
+                                    <?php
+                                } else if (mediaIsVideo($firstMedia)) {
+
+                                    ?>
+                                    <video width="auto" height="100%" controls>
+                                        <source src="<?php echo SAP_IMG_URL . json_decode($post->media, true)[0]['src']; ?>"
+                                                type="video/mp4">
+                                    </video>
+                                <?php }} ?>
+
+                                <div class="post-content">
+                                    <p class="fw-bold">
+                                        <a href='<?php echo $router->generate('quick_viewpost', ['id' => $post->post_id]); ?>'><?php echo $post->message ?></a>
+                                    </p>
+                                    <div class="date-time">
+                                        <?php echo $post->created_date ?>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            </div>
+                        <?php } ?>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4">
@@ -119,11 +144,16 @@ $cpgs = $this->getCpgs();
                         <div class="post-wrapper-one">
                             <?php foreach ($this->limitPosts($cpgs) as $cpg) { ?>
                                 <div class="post-item">
+                                    <?php if (!(empty($cpg->new_image) || empty($cpg->orginal_image))) { ?>
                                     <img src="<?php echo($this->imageLoader(($cpg->new_image ?: $cpg->orginal_image))) ?>"
                                          alt="Post Image">
+                                    <?php } else { ?>
+                                        <img src="<?php echo SAP_SITE_URL . '/assets/images/no-imag.png' ?>"
+                                             alt="Post Image">
+                                    <?php } ?>
                                     <div class="post-content">
                                         <p class="fw-bold">
-                                        <a href='<?php echo $router->generate('quick_posts_add_from_cpg',['cpg_id'=>$cpg->id]); ?>'><?php echo $post->message ?></a>
+                                            <a href='<?php echo $router->generate('quick_posts_add_from_cpg', ['cpg_id' => $cpg->id]); ?>'><?php echo $post->message ?></a>
                                         </p>
                                         <div class="date-time">
                                             <?php echo $cpg->created_at ?>
@@ -173,11 +203,11 @@ $cpgs = $this->getCpgs();
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const images = document.querySelectorAll("#dashboard_section img");
 
         images.forEach(image => {
-            image.addEventListener("error", function() {
+            image.addEventListener("error", function () {
                 // اگر عکس وجود نداشت، این تابع اجرا می‌شود
                 this.src = "<?php echo SAP_SITE_URL . '/assets/images/no-imag.png' ?>";
             });
