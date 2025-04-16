@@ -1,0 +1,303 @@
+
+
+    /* Watermark Preview Wrapper */
+    .watermark-preview-wrapper {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        margin-top: 10px;
+    }
+
+    /* Watermark Preview Box */
+    .watermark-preview-box {
+        width: 500px; /* Reduced size */
+        height: 200px; /* Reduced size */
+        border: 2px dashed #ccc;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Watermark Preview Container */
+    .watermark-preview-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Watermark Preview Image */
+    .watermark-preview-image {
+        max-width: 50%;
+        max-height: 50%;
+        position: absolute;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Default Hidden State */
+    .watermark-preview-image.hidden {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    /* Position Classes for Watermark */
+    .watermark-preview-image.center {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .watermark-preview-image.top-middle {
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .watermark-preview-image.bottom-middle {
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .watermark-preview-image.left-middle {
+        top: 50%;
+        left: 10%;
+        transform: translateY(-50%);
+    }
+    .watermark-preview-image.right-middle {
+        top: 50%;
+        right: 10%;
+        transform: translateY(-50%);
+    }
+    .watermark-preview-image.top-left {
+        top: 10%;
+        left: 10%;
+    }
+    .watermark-preview-image.bottom-left {
+        bottom: 10%;
+        left: 10%;
+    }
+    .watermark-preview-image.top-right {
+        top: 10%;
+        right: 10%;
+    }
+    .watermark-preview-image.bottom-right {
+        bottom: 10%;
+        right: 10%;
+    }
+            .toggle-switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+            }
+            .toggle-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            .toggle-label {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: 0.4s;
+                border-radius: 34px;
+            }
+            .toggle-label:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 0px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+            input:checked + .toggle-label {
+                background-color: #2196F3;
+            }
+            input:checked + .toggle-label:before {
+                transform: translateX(26px);
+            }
+            .network-card {
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            .checkbox-group label {
+                display: block;
+                margin: 5px 0;
+            }
+            /* Custom Label Styling */
+.custom-label {
+    font-family: 'Arial', sans-serif; /* Modern font stack */
+    font-size: 1rem; /* Adjust size as needed */
+    font-weight: bold; /* Make the text stand out */
+    color: #6c757d; /* Soft muted gray color */
+    text-align: right; /* Align text to the right */
+    display: block; /* Ensure it behaves as a block element */
+    margin-bottom: 0.5rem; /* Add spacing below the label */
+    letter-spacing: 0.5px; /* Slightly increase spacing between letters */
+    text-transform: capitalize; /* Capitalize the first letter */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover Effect for Interactivity */
+.custom-label:hover {
+    color: #3498db; /* Change color on hover for better interactivity */
+}
+    /* Subtle Shadow */
+    .shadow-sm {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+    /* Focus State */
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        outline: none;
+    }
+
+    /* Hover Effect */
+    .form-control:hover {
+        border-color: #3498db;
+    }
+    select.form-control option {
+        color: #333; /* Dark gray text for better visibility */
+        background-color: #fff; /* Ensure the background is white */
+    }
+    /* Box styling */
+.box {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add shadow and padding to the form */
+.form-horizontal {
+    /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* Customize form labels */
+.custom-label {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Customize inputs with focus effect */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Target Networks - Network cards styling */
+.network-card {
+    background-color: #F8FAFC;
+    border: 1px solid #007bff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.network-card:hover {
+    background-color: #3498db;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-group label {
+    display: block;
+    margin: 5px 0;
+}
+
+/* Toggle switch */
+.toggle-switch input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-switch label {
+    cursor: pointer;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 50px;
+    position: relative;
+}
+
+.toggle-switch label:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    transition: 0.3s;
+}
+
+.toggle-switch input[type="checkbox"]:checked + label {
+    background-color: #4CAF50;
+}
+
+.toggle-switch input[type="checkbox"]:checked + label:after {
+    left: 27px;
+}
+
+/* Custom button styling */
+.btn-custom {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+/* Section padding and margin for mobile */
+.mobile-row {
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .form-horizontal {
+        padding: 15px;
+    }
+    .box {
+        margin: 10px 0;
+    }
+}
+
+.crawler_twitter_icon:after { background-image: url(../images/social-icon/Twitter.png); width: 34px; height: 31px; }
+.crawler_telegram_icon:after { background-image: url(../images/social-icon/telegram.svg); width: 34px; height: 31px; }
+.crawler_facebook_icon:after { background-image: url(../images/social-icon/facebook.png); width: 34px; height: 31px; }
+.crawler_blogger_icon:after { background-image: url(../images/social-icon/blogger.svg); width: 34px; height: 31px; }
+.crawler_instagram_icon:after { background-image: url(../images/social-icon/instagram.svg); width: 34px; height: 31px; }
+.crawler_linkedin_icon:after { background-image: url(../images/social-icon/linkedin.png); width: 34px; height: 31px; }
+.crawler_pinterest_icon:after { background-image: url(../images/social-icon/pinterest.png); width: 34px; height: 31px; }
+.crawler_reddit_icon:after { background-image: url(../images/social-icon/Reddit.png); width: 34px; height: 31px; }
+.crawler_tumblr_icon:after { background-image: url(../images/social-icon/tumblr.png); width: 34px; height: 31px; }
+.crawler_wordpres_icon:after { background-image: url(../images/social-icon/WordPress.svg); width: 34px; height: 31px; }
+.crawler_youtube_icon:after { background-image: url(../images/social-icon/youtube.svg); width: 34px; height: 31px; }
+
+.error-message{
+    color : red;
+    }

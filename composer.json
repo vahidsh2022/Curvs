@@ -1,0 +1,6 @@
+{
+    "require": {
+        "illuminate/validation": "^10.48",
+        "phpoffice/phpspreadsheet": "^4.1"
+    }
+}

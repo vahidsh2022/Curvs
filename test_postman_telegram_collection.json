@@ -1,0 +1,56 @@
+{
+  "info": {
+    "_postman_id": "YOUR_POSTMAN_ID",
+    "name": "Telegram Bot API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Send Telegram Request",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"chat_id\": \"123456789\",\n  \"text\": \"Hello from Postman!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.telegram.org/bot6903075389:AAHwPqY1ILKN0KIRAdzyBonff5iLTGJCz8Q/{{type}}",
+          "protocol": "https",
+          "host": [
+            "api",
+            "telegram",
+            "org"
+          ],
+          "path": [
+            "bot6903075389:AAHwPqY1ILKN0KIRAdzyBonff5iLTGJCz8Q",
+            "{{type}}"
+          ],
+          "variable": [
+            {
+              "key": "type",
+              "value": "sendMessage"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "type",
+      "value": "sendMessage"
+    }
+  ]
+}
