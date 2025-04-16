@@ -583,7 +583,7 @@ if (isset($post_data) && !empty($post_data)) {
                                                 <?php
                                                 $uploadsDirURl = SAP_IMG_URL;
                                                 $assetsDirURL = SAP_SITE_URL . '/assets';
-                                                if(!empty($quick_post->media)) {
+                                                if(!empty($quick_post->media) && !empty(json_decode($quick_post->media,true))) {
                                                     echo "<div class='flex gap-2'>";
                                                     foreach (json_decode($quick_post->media,true) as $media) {
                                                         $mediaSrc = $uploadsDirURl . $media['src'];
