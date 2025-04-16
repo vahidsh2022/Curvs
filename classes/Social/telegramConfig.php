@@ -79,7 +79,7 @@ class SAP_Telegram
                 $data['media'][] = [
                     'type' => mediaIsImage($file['src']) ? 'photo' : 'video',
                     'media' => "attach://$mediaPhotoKey",
-                    'caption' => $file['caption'],
+                    'caption' => $index == array_key_first($media) ? $message : '',
                 ];
             }
 
@@ -254,12 +254,10 @@ class SAP_Telegram
                 'Content-Type: multipart/form-data'
             ),
         ));
-
         $response = curl_exec($curl);
-
         $info = curl_getinfo($curl);
         $log = $this->logs->add_log('telegram', [
-            'message' => $data['caption'],
+            'message' => $data['caption'] ?? '',
             'http_code' => $info['http_code'],
             'channel'=> $data['chat_id'],
         ], '', $user_id);
