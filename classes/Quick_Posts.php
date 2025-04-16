@@ -156,7 +156,6 @@ class SAP_Quick_Posts
 	{
 		//Check form submit request
 		if (true) {
-
 			//Call Upload class and upload media
 			$fileUpload = new FileUploader(array());
 			$validate_size = 1;
@@ -239,7 +238,7 @@ class SAP_Quick_Posts
                     $uploadPath = $fileUpload->uploadFileFromFile($fileMedia);
                     $media[] = [
                         'src' => $uploadPath,
-                        'caption' => '', // TODO: MUST SET CAPTION
+                        'caption' => $_POST['caption'][$index] ?? '', // TODO: MUST SET CAPTION
                     ];
                 }
                 $_POST['media'] = json_encode($media);
@@ -251,6 +250,7 @@ class SAP_Quick_Posts
                 $_POST['media'] = json_encode([]);
             }
 
+            dd($_POST);
 			$user_id = sap_get_current_user_id();
 			$user_options = $this->settings->get_user_setting('sap_general_options', $user_id);
 			$timezone = (!empty($user_options['timezone'])) ? $user_options['timezone'] : ''; // user timezone
