@@ -91,7 +91,7 @@ class SAP_BotsLogs
 //            $bot = $this->db->get_row("SELECT * FROM sap_bots WHERE JSON_CONTAINS(pages, '\"$botId\"')",true);
 //            if(empty($bot)) {
                 REST([
-                    'error' => "Bot not found with pages",
+                    'error' => "Bot not found",
                 ]);
 //            }
 //            $data['bot_id'] = $bot->id;
