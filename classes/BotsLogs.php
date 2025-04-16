@@ -84,6 +84,19 @@ class SAP_BotsLogs
             }
         }
 
+        if(! $this->db->exists('sap_bots','id',[
+            'id' => $data['bot_id'],
+        ])) {
+            $botId = $data['bot_id'];
+            $bot = $this->db->get_row("SELECT * FROM sap_bots WHERE JSON_CONTAINS(pages, '\"$botId\"')",true);
+            if(empty($bot)) {
+                REST([
+                    'error' => "Bot not found with pages $botId",
+                ]);
+                return false;
+            }
+            $data['bot_id'] = $bot->id;
+        }
         $data['data_json'] = array_filter($data['data_json']);
         $data['data_json'] = json_encode($data['data_json']);
 
@@ -111,8 +124,8 @@ class SAP_BotsLogs
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $factory = getValidator();
-        return $factory->validate($data, [
-            'bot_id' => ['bail', 'required', 'integer'],
+        return $factory->validate(is_array($data) ? $data : [], [
+            'bot_id' => ['bail', 'required'],
             'identifier' => ['required','string'],
             'message' => ['nullable','string'],
             'group' => ['nullable','string'],
