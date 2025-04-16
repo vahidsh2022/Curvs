@@ -468,13 +468,18 @@ if (isset($post_data) && !empty($post_data)) {
                                 <div  class="col-lg-12 quick-media-wrap" <?php echo $media_style; ?>>
                                     <label class="control-label"><?php echo $sap_common->lang('media_label'); ?></label>
                                     <input id="quick-post-media" tabindex="3" value="" multiple name="media[]" type="file" class="file file-loading" data-show-upload="false" data-show-caption="true" data-max-file-size="<?php echo MINGLE_MAX_FILE_UPLOAD_SIZE; ?>" data-allowed-file-extensions='["png", "jpg","jpeg", "gif","mp4"]'/>
-                                    <div class="sap-mt-3">
+                                    <div class="sap-mt-3" style="display: flex">
                                         <?php if(!isEmptyJson($post_data->media)) { ?>
                                             <?php foreach (json_decode($post_data->media,true) as $media) { ?>
                                                 <?php if(mediaIsImage($media['src'])) { ?>
-                                                    <a href="<?php echo SAP_IMG_URL . $media['src']; ?>" target="_blank">
-                                                        <img src='<?php echo SAP_IMG_URL . $media['src']; ?>' width="100" height="100"/>
-                                                    </a>
+                                                    <div style="display: flex; flex-direction: column; margin-right: 15px">
+                                                        <a href="<?php echo SAP_IMG_URL . $media['src']; ?>" target="_blank">
+                                                            <img src='<?php echo SAP_IMG_URL . $media['src']; ?>' width="100%" height="100%" style="max-width: 250px"/>
+                                                        </a>
+                                                        <div class="caption" style="margin-top: 10px">
+                                                            <textarea id="caption" name="caption[]" placeholder="Enter caption ..." rows="4" cols="37" class="media-caption"><?php echo SAP_IMG_URL . $media['caption']; ?></textarea>
+                                                        </div>
+                                                    </div>
                                                 <?php } else if(mediaIsVideo($media['src'])) { ?>
                                                     <div><a href='<?php echo SAP_IMG_URL . $media['src'] ?>' target='_blank'><i class='fa fa-file-video-o' aria-hidden='true'></i></a><div>
                                                 <?php } ?>
