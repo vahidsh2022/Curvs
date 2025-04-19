@@ -85,7 +85,7 @@ class SAP_Crawlers
 
             $data[] = [
                 $key + 1,
-                $crawler['platform'] . $this->getIconByPlatform($crawler['platform']),
+                $this->getIconByPlatform($crawler['platform']) . $crawler['platform'],
                 $channels,
                 $crawler['status'],
                 $crawler['translation_language'],
