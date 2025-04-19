@@ -251,7 +251,6 @@ class SAP_Quick_Posts
                 $_POST['image'] = '';
                 $_POST['media'] = json_encode([]);
             }
-
 			$user_id = sap_get_current_user_id();
 			$user_options = $this->settings->get_user_setting('sap_general_options', $user_id);
 			$timezone = (!empty($user_options['timezone'])) ? $user_options['timezone'] : ''; // user timezone
@@ -1239,7 +1238,6 @@ class SAP_Quick_Posts
 						if (!class_exists('SAP_Twitter')) {
 							require_once(CLASS_PATH . 'Social' . DS . 'twitterConfig.php');
 						}
-
 						$this->twposting = new SAP_Twitter($user_id);
 						$tw_result = $this->twposting->sap_quick_post_to_twitter($post_id);
 
