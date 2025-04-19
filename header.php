@@ -156,7 +156,7 @@ $user_class = ($user_details['role'] == 'user') ? 'mingle-user' : 'mingle-admin'
     <?php sap_check_user_payment_status() ?>
     <header class="main-header">
         <div class="pull-left image logo-class">
-            <img src="/assets/images/Curvs.12.png" alt="---">
+            <img id="logo-img" src="/assets/images/Curvs12.png">
         </div>
         <!-- Logo -->
         <!-- <a href="<?php echo SAP_SITE_URL; ?>/posts/" class="logo sap-logo-text">

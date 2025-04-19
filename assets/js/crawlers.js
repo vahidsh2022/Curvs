@@ -7,12 +7,12 @@ function updatePattern() {
         // Web: Allow multiple valid URLs separated by commas
         addressInput.pattern = "^\\s*(https?:\\/\\/[^\\s,]+)\\s*(,\\s*https?:\\/\\/[^\\s,]+\\s*)*$";
         addressInput.title = "Enter valid URLs separated by commas (e.g., https://example.com, https://site.com)";
-        addressInput.placeholder = '';
+        addressInput.placeholder = 'For Example): https://google.com';
     } else if (platform === "telegram") {
         // Telegram: Allow multiple channel/usernames or numeric IDs separated by commas
         addressInput.pattern = "^\\s*([a-zA-Z0-9_]{5,})\\s*(,\\s*[a-zA-Z0-9_]{5,}\\s*)*$";
         addressInput.title = "Enter Telegram channel IDs or usernames separated by commas (e.g., @channel, 123456789)";
-        addressInput.placeholder = '';
+        addressInput.placeholder = 'For Example(Channel Id): Curvs_ai';
     }
 }
 
