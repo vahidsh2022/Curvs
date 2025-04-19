@@ -139,5 +139,6 @@ if(strpos($match['name'],'settings') !== false) {
 <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 
 <script src="<?php echo SAP_SITE_URL . '/assets/js/iframe-handler.js' ?>"></script>
+<script src="<?php echo SAP_SITE_URL . '/assets/js/helpers.js' ?>"></script>
 </body>
 </html>

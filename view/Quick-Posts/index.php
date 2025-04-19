@@ -694,7 +694,9 @@ if (isset($post_data) && !empty($post_data)) {
                         const uploadsDirURL = "<?= SAP_IMG_URL ?>";
                         const assetsDirURL = "<?= SAP_SITE_URL ?>/assets";
                         let output = "";
-
+                        if(row.media) {
+                            console.log({data,row})
+                        }
                         if (row.media) {
                             try {
                                 const mediaArray = JSON.parse(row.media);
