@@ -529,7 +529,6 @@ class SAP_Settings {
 				}
 
 				$twitter_keys = $_POST['sap_twitter_options']['twitter_keys'];
-                $twitter_keys = array_values($twitter_keys);
 
 				$twitter_keys_old_data = array();
 				if( !empty( $sap_twitter_options ) ) {
