@@ -459,13 +459,13 @@ echo json_encode($sap_twitter_options['enable_twitter']);
                                             <label class="enable_image"
                                                    for="enable_image"><?php echo $sap_common->lang('image'); ?></label>
                                         </div>
-                                        <div class="image-video-select">
+                                        <div class="image-video-select" style="display: none">
                                             <input id="enable_video" type="radio" name="enable_video_image"
                                                    value="enablevideo">
                                             <label class="enable_image"
                                                    for="enable_video"><?php echo $sap_common->lang('video_label'); ?></label>
                                         </div>
-                                        <div class="image-video-select">
+                                        <div class="image-video-select" style="display: none">
                                             <input id="enable_media" type="radio" name="enable_video_image"
                                                    value="enablemedia">
                                             <label class="enable_image"

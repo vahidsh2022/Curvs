@@ -424,11 +424,11 @@ if (isset($post_data) && !empty($post_data)) {
 											<input id="enable_image" type="radio" name="enable_video_image" <?php echo empty($post_data->image) ? '' : 'checked="checked"'; ?> value="enableimage">
 				                            <label class="enable_image" for="enable_image"><?php echo $sap_common->lang('image'); ?></label>
 										</div>
-										<div class="image-video-select">	
+										<div class="image-video-select" style="display: none">
 											<input id="enable_video" type="radio" name="enable_video_image" value="enablevideo" <?php echo empty($post_data->video) ? '' : 'checked="checked"'; ?>>
 			                            	<label class="enable_image" for="enable_video"><?php echo $sap_common->lang('video_label'); ?></label>
 										</div>
-                                        <div class="image-video-select">
+                                        <div class="image-video-select" style="display: none">
                                             <input id="enable_media" type="radio" name="enable_video_image" value="enablemedia" <?php echo isEmptyJson($post_data->media) ? '' : 'checked="checked"'; ?>>
                                             <label class="enable_image" for="enable_media"><?php echo $sap_common->lang('media_label'); ?></label>
                                         </div>

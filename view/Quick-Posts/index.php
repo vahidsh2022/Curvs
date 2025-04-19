@@ -668,7 +668,7 @@ if (isset($post_data) && !empty($post_data)) {
                     }
                 },
                 {
-                    data: "message", render: function (data, type, row) {
+                    data: "message",orderable: false, render: function (data, type, row) {
                         return String(data).substring(0, 100) + ' ...';
                     }
                 },
@@ -690,10 +690,7 @@ if (isset($post_data) && !empty($post_data)) {
                         const uploadsDirURL = "<?= SAP_IMG_URL ?>";
                         const assetsDirURL = "<?= SAP_SITE_URL ?>/assets";
                         let output = "";
-                        if(row.media) {
-                            console.log({data,row})
-                        }
-                        if (row.media) {
+                        if (row.media && row.media !== JSON.stringify([]) && row.media?.length) {
                             try {
                                 const mediaArray = JSON.parse(row.media);
                                 output += `<div class='flex gap-2'>`;
@@ -714,7 +711,7 @@ if (isset($post_data) && !empty($post_data)) {
                             output = `<a href="${src}" target="_blank"><i class='fa fa-file-video-o' aria-hidden='true'></i></a>`;
                         } else if (row.image && row.image !== "0") {
                             const src = uploadsDirURL + row.image;
-                            output = `<img class="media-thumbnail" src="${src}" />`;
+                            output = `<a href="${src}" target="_blank"> <img class="media-thumbnail" src="${src}" /></a>`;
                         } else {
                             output = `<img class="media-thumbnail" src="${assetsDirURL}/images/no-imag.png" />`;
                         }
@@ -866,7 +863,7 @@ if (isset($post_data) && !empty($post_data)) {
                         const assetsDirURL = "<?= SAP_SITE_URL ?>/assets";
                         let output = "";
 
-                        if (row.media) {
+                        if (row.media && row.media !== JSON.stringify([]) && row.media?.length) {
                             try {
                                 const mediaArray = JSON.parse(row.media);
                                 output += `<div class='flex gap-2'>`;
@@ -887,7 +884,7 @@ if (isset($post_data) && !empty($post_data)) {
                             output = `<a href="${src}" target="_blank"><i class='fa fa-file-video-o' aria-hidden='true'></i></a>`;
                         } else if (row.image && row.image !== "0") {
                             const src = uploadsDirURL + row.image;
-                            output = `<img class="media-thumbnail" src="${src}" />`;
+                            output = `<a href="${src}" target="_blank"> <img class="media-thumbnail" src="${src}" /></a>`;
                         } else {
                             output = `<img class="media-thumbnail" src="${assetsDirURL}/images/no-imag.png" />`;
                         }
