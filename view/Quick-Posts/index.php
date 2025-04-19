@@ -766,7 +766,7 @@ if (isset($post_data) && !empty($post_data)) {
                     var selected_val = $(this).find('option:selected').val();
                     if (selected_val == 'delete') {
                         var id = [];
-                        $("input[name='post_id[]']:checked").each(function (i) {
+                        $("#list-post input[name='post_id[]']:checked").each(function (i) {
                             id[i] = $(this).val();
                         });
 
@@ -943,7 +943,7 @@ if (isset($post_data) && !empty($post_data)) {
                     var selected_val = $(this).find('option:selected').val();
                     if (selected_val == 'delete') {
                         var id = [];
-                        $("input[name='post_id[]']:checked").each(function (i) {
+                        $("#list-post-scheduled input[name='post_id[]']:checked").each(function (i) {
                             id[i] = $(this).val();
                         });
 
