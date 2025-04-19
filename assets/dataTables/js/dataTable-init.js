@@ -14,10 +14,10 @@ $(function () {
     setTimeout(function () {
       if ($('body').hasClass('sidebar-collapse')) {
         // Sidebar is collapsed
-        $('#logo-img').attr('src', 'http://localhost/Curvs/assets/images/Curvs.11.png');
+        $('#logo-img').attr('src', '/assets/images/Curvs.11.png');
       } else {
         // Sidebar is expanded
-        $('#logo-img').attr('src', 'http://localhost/Curvs/assets/images/Curvs12.png');
+        $('#logo-img').attr('src', '/assets/images/Curvs12.png');
       }
     }, 50);
   });
