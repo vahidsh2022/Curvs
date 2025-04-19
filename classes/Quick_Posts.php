@@ -843,7 +843,13 @@ class SAP_Quick_Posts
         }
 
         // ساختن query اصلی با فیلتر و صفحه‌بندی
-        $query = "SELECT * FROM $tableName $where LIMIT $limit OFFSET $offset";
+        $query = "
+        SELECT p.*, m.meta_value AS networks
+        FROM $tableName AS p
+        LEFT JOIN sap_quick_postmeta AS m ON p.post_id = m.post_id AND m.meta_key = 'sap_networks'
+        $where
+        LIMIT $limit OFFSET $offset
+    ";
         try {
             $result = $this->db->query($query, true);
         } catch (Exception $exception) {
@@ -862,6 +868,12 @@ class SAP_Quick_Posts
         // آماده‌سازی خروجی
         $data = [];
         while ($row = $result->fetch_assoc()) {
+            if (!empty($row['networks'])) {
+                $networks = @unserialize($row['networks']);
+                if ($networks !== false) {
+                    $row['networks'] = $networks; // یا json_encode($networks) اگه می‌خوای رشته باشه
+                }
+            }
             $data[] = $row;
         }
 

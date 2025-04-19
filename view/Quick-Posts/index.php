@@ -675,17 +675,13 @@ if (isset($post_data) && !empty($post_data)) {
                 {
                     data: null, orderable: false,
                     searchable: false, render: function (data, type, row) {
-                        return '';
-                        // let output = '';
-                        // for (let network in data) {
-                        //     let space = data[network];
-                        //     if (Array.isArray(space)) {
-                        //         space = space.join(", ");
-                        //     }
-                        //     output += `<span class="network">${network}: ${space}</span><br>`;
-                        // }
-                        // console.log({data,output,type,row})
-                        // return output;
+                        let output = '';
+                        const socialIconPaths = getSocialIcons(Object.keys((row.networks ?? {})));
+                        socialIconPaths.forEach((socialIconPath,index) => {
+                            output += `<span class="network"> <img src="${socialIconPath}" width="20" /></span><br>`;
+                        })
+
+                        return output;
                     },
                 },
                 {
@@ -854,17 +850,13 @@ if (isset($post_data) && !empty($post_data)) {
                 {
                     data: null, orderable: false,
                     searchable: false, render: function (data, type, row) {
-                        return '';
-                        // let output = '';
-                        // for (let network in data) {
-                        //     let space = data[network];
-                        //     if (Array.isArray(space)) {
-                        //         space = space.join(", ");
-                        //     }
-                        //     output += `<span class="network">${network}: ${space}</span><br>`;
-                        // }
-                        // console.log({data,output,type,row})
-                        // return output;
+                        let output = '';
+                        const socialIconPaths = getSocialIcons(Object.keys((row.networks ?? {})));
+                        socialIconPaths.forEach((socialIconPath,index) => {
+                            output += `<span class="network"> <img src="${socialIconPath}" width="20" /></span><br>`;
+                        })
+
+                        return output;
                     },
                 },
                 {
