@@ -669,7 +669,7 @@ if (isset($post_data) && !empty($post_data)) {
                 },
                 {
                     data: "message",orderable: false, render: function (data, type, row) {
-                        return String(data).substring(0, 100) + ' ...';
+                        return `<span class="post-detail" aria-data-id="${row.post_id}">${String(data).substring(0, 100) + ' ...'}</span>`;
                     }
                 },
                 {
@@ -792,6 +792,40 @@ if (isset($post_data) && !empty($post_data)) {
                         }
                     }
                 });
+
+                $(document).on('click', '.post-detail', function () {
+                    var obj = $(this);
+                    var log_id = $(this).attr('aria-data-id');
+                    $.ajax({
+                        type: 'GET',
+                        url: '../quick-post/detail/' + log_id,
+                        success: function (result) {
+                            var result = jQuery.parseJSON(result);
+
+                            if (result) {
+                                let $tbody = $('#myModal').find('.modal-body table tbody');
+                                $tbody.empty();
+                                for (let key in result) {
+                                    let title = result[key]['title'];
+                                    let value = result[key]['value'];
+                                    if (key == 'image') {
+                                        $tbody.append(`<tr><th>${title}</th><td><img class="media-preview" src="${value}"></td></tr>`);
+                                        continue
+                                    }
+                                    if (key == 'video') {
+                                        $tbody.append(value ?
+                                            `<tr><th>${title}</th><td><video class="media-preview" controls src="${value}"></video></td></tr>` :
+                                            `<tr><th>${title}</th><td>no-video</td></tr>`);
+                                        continue
+                                    }
+                                    $tbody.append(`<tr><th>${title}</th><td>${value}</td></tr>`);
+                                }
+                            }
+                        }
+                    });
+                    $('#myModal').modal('show');
+                });
+
             }
         });
 
@@ -841,7 +875,7 @@ if (isset($post_data) && !empty($post_data)) {
                 },
                 {
                     data: "message", render: function (data, type, row) {
-                        return String(data).substring(0, 100) + ' ...';
+                        return `<span class="post-scheduled-detail" aria-data-id="${row.post_id}">${String(data).substring(0, 100) + ' ...'}</span>`;
                     }
                 },
                 {
@@ -965,6 +999,39 @@ if (isset($post_data) && !empty($post_data)) {
                         }
                     }
                 });
+
+                $(document).on('click', '.post-scheduled-detail', function () {
+                    var obj = $(this);
+                    var log_id = $(this).attr('aria-data-id');
+                    $.ajax({
+                        type: 'GET',
+                        url: '../quick-post/detail/' + log_id,
+                        success: function (result) {
+                            var result = jQuery.parseJSON(result);
+
+                            if (result) {
+                                let $tbody = $('#myModal').find('.modal-body table tbody');
+                                $tbody.empty();
+                                for (let key in result) {
+                                    let title = result[key]['title'];
+                                    let value = result[key]['value'];
+                                    if (key == 'image') {
+                                        $tbody.append(`<tr><th>${title}</th><td><img class="media-preview" src="${value}"></td></tr>`);
+                                        continue
+                                    }
+                                    if (key == 'video') {
+                                        $tbody.append(value ?
+                                            `<tr><th>${title}</th><td><video class="media-preview" controls src="${value}"></video></td></tr>` :
+                                            `<tr><th>${title}</th><td>no-video</td></tr>`);
+                                        continue
+                                    }
+                                    $tbody.append(`<tr><th>${title}</th><td>${value}</td></tr>`);
+                                }
+                            }
+                        }
+                    });
+                    $('#myModal').modal('show');
+                });
             }
         });
 
@@ -981,38 +1048,6 @@ if (isset($post_data) && !empty($post_data)) {
             }, 500);
         });
 
-        $(document).on('click', '.post-detail', function () {
-            var obj = $(this);
-            var log_id = $(this).attr('aria-data-id');
-            $.ajax({
-                type: 'GET',
-                url: '../quick-post/detail/' + log_id,
-                success: function (result) {
-                    var result = jQuery.parseJSON(result);
-
-                    if (result) {
-                        let $tbody = $('#myModal').find('.modal-body table tbody');
-                        $tbody.empty();
-                        for (let key in result) {
-                            let title = result[key]['title'];
-                            let value = result[key]['value'];
-                            if (key == 'image') {
-                                $tbody.append(`<tr><th>${title}</th><td><img class="media-preview" src="${value}"></td></tr>`);
-                                continue
-                            }
-                            if (key == 'video') {
-                                $tbody.append(value ?
-                                    `<tr><th>${title}</th><td><video class="media-preview" controls src="${value}"></video></td></tr>` :
-                                    `<tr><th>${title}</th><td>no-video</td></tr>`);
-                                continue
-                            }
-                            $tbody.append(`<tr><th>${title}</th><td>${value}</td></tr>`);
-                        }
-                    }
-                }
-            });
-            $('#myModal').modal('show');
-        });
 
         $(document).on("error", "#list-post img", function () {
             $(this).attr("src", "<?php echo SAP_SITE_URL . '/assets/images/no-imag.png' ?>");
