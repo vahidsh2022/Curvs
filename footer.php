@@ -81,7 +81,7 @@ if ($match['name'] == 'addpost' || $match['name'] == 'viewpost' || $match['name'
 <!-- dataTable End -->
 <?php
 if ($match['name'] == 'addpost' || $match['name'] == 'settings' || $match['name'] == 'general_settings' || $match['name'] == 'viewpost' || $match['name'] == 'quick_posts' || $match['name'] == 'quick_posts_with_id' || $match['name'] == 'quick_viewpost' || $match['name'] == 'quick_posts_add' || $match['name'] == 'quick_posts_add_from_cpg') {
-    echo '<script type="text/javascript" src="' . SAP_SITE_URL . '/assets/js/fileinput.js" defer onload=""></script>';
+    echo '<script type="text/javascript" src="' . SAP_SITE_URL . '/assets/js/fileinput.js?id=1" defer onload=""></script>';
     echo '<script type="text/javascript" src="' . SAP_SITE_URL . '/assets/js/posts/add-posts.js" defer onload=""></script>';
 }
 
