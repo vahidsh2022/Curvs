@@ -826,6 +826,7 @@ class SAP_Quick_Posts
 
     public function get_posts_by_status_json()
     {
+        $userId = sap_get_current_user_id();
         $status = $_GET['status'];
         $limit = 10;
         $page = isset($_GET['start']) ? $_GET['start'] : 0;
@@ -834,7 +835,7 @@ class SAP_Quick_Posts
         $searchValue = isset($_GET['searchValue']) ? trim($_GET['searchValue']) : '';
         $tableName = $this->table_name;
 
-        $where = "WHERE status = $status";
+        $where = "WHERE user_id = $userId AND status = $status";
 
         if (!empty($searchValue)) {
             // ضد حملات SQL Injection اگر PDO یا چیزی نداری
