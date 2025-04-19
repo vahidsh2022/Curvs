@@ -288,7 +288,7 @@ if (!empty($match['params']['id'])) {
 if (isset($post_data) && !empty($post_data)) {
     $preview_date = (isset($post_data->created_date) && !empty($post_data->created_date)) ? $post_data->created_date : "";
     $preview_image = (isset($post_data->image) && !empty($post_data->image)) ? $post_data->image : "";
-    if(!empty($preview_image)) {
+    if (!empty($preview_image)) {
         $preview_image = SAP_IMG_URL . str_replace(SAP_IMG_URL, "", $preview_image);
     }
     $preview_link = (isset($post_data->share_link) && !empty($post_data->share_link)) ? $post_data->share_link : "";
@@ -506,7 +506,7 @@ if (isset($post_data) && !empty($post_data)) {
                         </li>
                     </ul>
                 </div>
-                <?php $all_posts = $this->get_posts_by_status(1); ?>
+                <!--                --><?php //$all_posts = $this->get_posts_by_status(1); ?>
                 <div class="sap-tab-content-wrap 456">
                     <div class="sap-tab-content sap-tab-content-published <?php echo $publish_content_active; ?>"
                          id="published">
@@ -532,100 +532,15 @@ if (isset($post_data) && !empty($post_data)) {
                                     <th data-sortable="false" data-width="10px"><input type="checkbox"
                                                                                        class="quickpost-select-all"/>
                                     </th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('message'); ?></th>
-                                    <th data-sortable="true"><?php eLang('networks'); ?></th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('image_video'); ?></th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('date'); ?></th>
+                                    <th>ID</th>
+                                    <th><?php echo $sap_common->lang('message') ?> </th>
+                                    <th><?php echo $sap_common->lang('networks') ?></th>
+                                    <th><?php echo $sap_common->lang('image_video') ?></th>
                                     <th data-sortable="false"
                                         class="quick-post-th-action"><?php echo $sap_common->lang('action'); ?></th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th data-sortable="false" data-width="10px"><input type="checkbox"
-                                                                                       class="quickpost-select-all"/>
-                                    </th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('message'); ?></th>
-                                    <th data-sortable="true"><?php eLang('networks'); ?></th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('image_video'); ?></th>
-                                    <th data-sortable="true"><?php echo $sap_common->lang('date'); ?></th>
-                                    <th data-sortable="false"><?php echo $sap_common->lang('action'); ?></th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <?php
-                                $page_query = $_GET['params'];
-                                $page_data = explode("/", $page_query);
-                                $selected_id = !empty($page_data[1]) ? $page_data[1] : '';
-
-
-                                if (count($all_posts) > 0) {
-                                    require_once CLASS_PATH . DS . 'Crawlers.php';
-                                    $crawlers = new SAP_Crawlers();
-                                    foreach ($all_posts as $quick_post) {
-                                        ?>
-                                        <tr id="quick_post_<?php echo $quick_post->post_id; ?>">
-                                            <td><input type="checkbox" name="post_id[]"
-                                                       value="<?php echo $quick_post->post_id; ?>"/></td>
-                                            <td>
-                                                <a aria-data-id="<?php echo $quick_post->post_id; ?>" class="edit_quick_post post-detail">
-                                                    <?php echo !empty($quick_post->message) ? $this->common->sap_content_excerpt($quick_post->message, 65) : ''; ?>
-                                                </a>
-                                            </td>
-                                            <td><?php
-                                                // foreach (unserialize($quick_post->networks) as $network => $space) {
-                                                //     if (is_array($space))
-                                                //         $space = implode($space);
-                                                //     echo $crawlers->getIconByPlatform($network) . $space;
-                                                // }
-                                                ?></td>
-                                            <td>
-                                                <?php
-                                                $uploadsDirURl = SAP_IMG_URL;
-                                                $assetsDirURL = SAP_SITE_URL . '/assets';
-                                                if(!empty($quick_post->media) && !empty(json_decode($quick_post->media,true))) {
-                                                    echo "<div class='flex gap-2'>";
-                                                    foreach (json_decode($quick_post->media,true) as $media) {
-                                                        $mediaSrc = $uploadsDirURl . $media['src'];
-                                                        if(mediaIsImage($mediaSrc)) {
-                                                            echo "<div><a href='$mediaSrc' target='_blank'><img class='media-thumbnail' src='$mediaSrc'></a></div>";
-                                                        } else if (mediaIsVideo($mediaSrc)) {
-                                                            echo "<div><a href='$mediaSrc' target='_blank'><i class='fa fa-file-video-o' aria-hidden='true'></i></video></a><div>";
-                                                        }
-                                                    }
-                                                    echo "</div>";
-                                                } else if(!empty($quick_post->video)){
-                                                    $mediaSrc = $uploadsDirURl . $quick_post->video;
-                                                    echo "<a href='$mediaSrc' target='_blank'><i class='fa fa-file-video-o' aria-hidden='true'></i></a>";
-                                                }elseif(!empty($quick_post->image)){
-                                                    $mediaSrc = $uploadsDirURl . $quick_post->image;
-                                                    echo "<img class='media-thumbnail' src='$mediaSrc'>";
-                                                }else{
-                                                    echo "<img class='media-thumbnail' src='$assetsDirURL/images/no-imag.png'>";
-                                                }
-                                                ?>
-                                            </td>
-                                            <?php
-                                            $shedule = $this->get_post_meta($quick_post->post_id, 'sap_schedule_time');
-                                            ?>
-                                            <td class="quick-status">
-                                                <span <?php echo !empty($shedule) && $quick_post->status == 2 ? 'data-toggle="tooltip" title="' . date('Y-m-d H:i', $shedule) . '" ' : '' ?> data-placement="left"><?php echo date("M j, Y g:i a", strtotime($quick_post->created_date)); ?></span>
-                                            </td>
-                                            <td class="action_icons">
-                                                <a class="delete_quick_post" data-toggle="tooltip" title="Delete"
-                                                   data-placement="top"
-                                                   aria-data-id="<?php echo $quick_post->post_id; ?>"><i
-                                                            class="fa fa-trash" aria-hidden="true"></i></a>
-                                                <a title="Edit" href="<?php echo $router->generate('quick_viewpost',['id'=>$quick_post->post_id]); ?>"><i
-                                                            class="fa fa-pencil" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                }
-                                ?>
-
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -690,10 +605,12 @@ if (isset($post_data) && !empty($post_data)) {
                                                        value="<?php echo $quick_post->post_id; ?>" <?php echo($quick_post->post_id == $selected_id ? 'checked' : ''); ?>/>
                                             </td>
                                             <td>
-                                                <a aria-data-id="<?php echo $quick_post->post_id; ?>" class="edit_quick_post post-detail">
+                                                <a aria-data-id="<?php echo $quick_post->post_id; ?>"
+                                                   class="edit_quick_post post-detail">
                                                     <?php echo !empty($quick_post->message) ? $this->common->sap_content_excerpt($quick_post->message, 65) : ''; ?>
                                                 </a>
-                                            </td><td><?php
+                                            </td>
+                                            <td><?php
                                                 // foreach (unserialize($quick_post->networks) as $network => $space) {
                                                 //     if (is_array($space))
                                                 //         $space = implode($space);
@@ -704,24 +621,24 @@ if (isset($post_data) && !empty($post_data)) {
                                                 <?php
                                                 $uploadsDirURl = SAP_IMG_URL;
                                                 $assetsDirURL = SAP_SITE_URL . '/assets';
-                                                if(!empty($quick_post->media)) {
+                                                if (!empty($quick_post->media)) {
                                                     echo "<div class='flex gap-2'>";
-                                                    foreach (json_decode($quick_post->media,true) as $media) {
+                                                    foreach (json_decode($quick_post->media, true) as $media) {
                                                         $mediaSrc = $uploadsDirURl . $media['src'];
-                                                        if(mediaIsImage($mediaSrc)) {
+                                                        if (mediaIsImage($mediaSrc)) {
                                                             echo "<div><a href='$mediaSrc' target='_blank'><img class='media-thumbnail' src='$mediaSrc'></a></div>";
                                                         } else if (mediaIsVideo($mediaSrc)) {
                                                             echo "<div><a href='$mediaSrc' target='_blank'><i class='fa fa-file-video-o' aria-hidden='true'></i></video></a><div>";
                                                         }
                                                     }
                                                     echo "</div>";
-                                                } else if(!empty($quick_post->video)){
+                                                } else if (!empty($quick_post->video)) {
                                                     $mediaSrc = $uploadsDirURl . $quick_post->video;
                                                     echo "<a href='$mediaSrc' target='_blank'><i class='fa fa-file-video-o' aria-hidden='true'></i></video></a>";
-                                                }elseif(!empty($quick_post->image)){
+                                                } elseif (!empty($quick_post->image)) {
                                                     $mediaSrc = $uploadsDirURl . $quick_post->image;
                                                     echo "<img class='media-thumbnail' src='$mediaSrc'>";
-                                                }else{
+                                                } else {
                                                     echo "<img class='media-thumbnail' src='$assetsDirURL/images/no-imag.png'>";
                                                 }
                                                 ?>
@@ -734,17 +651,20 @@ if (isset($post_data) && !empty($post_data)) {
                                             </td>
                                             <td class="action_icons">
 
-<!--                                                <a href="--><?php //echo SAP_SITE_URL . '/quick-post/view/' . $quick_post->post_id; ?><!--"-->
-<!--                                                   class="edit_quick_post" data-toggle="tooltip" title="Edit"-->
-<!--                                                   data-placement="top"-->
-<!--                                                   aria-data-id="--><?php //echo $quick_post->post_id; ?><!--"><i-->
-<!--                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i></a>-->
+                                                <!--                                                <a href="-->
+                                                <?php //echo SAP_SITE_URL . '/quick-post/view/' . $quick_post->post_id; ?><!--"-->
+                                                <!--                                                   class="edit_quick_post" data-toggle="tooltip" title="Edit"-->
+                                                <!--                                                   data-placement="top"-->
+                                                <!--                                                   aria-data-id="-->
+                                                <?php //echo $quick_post->post_id; ?><!--"><i-->
+                                                <!--                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i></a>-->
 
                                                 <a class="delete_quick_post" data-toggle="tooltip" title="Delete"
                                                    data-placement="top"
                                                    aria-data-id="<?php echo $quick_post->post_id; ?>"><i
                                                             class="fa fa-trash" aria-hidden="true"></i></a>
-                                                <a title="Edit" href="<?php echo $router->generate('quick_viewpost',['id'=>$quick_post->post_id]); ?>"><i
+                                                <a title="Edit"
+                                                   href="<?php echo $router->generate('quick_viewpost', ['id' => $quick_post->post_id]); ?>"><i
                                                             class="fa fa-pencil" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -773,7 +693,8 @@ if (isset($post_data) && !empty($post_data)) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"
-                        aria-hidden="true"></i></button>
+                                                                                               aria-hidden="true"></i>
+                </button>
                 <h3 class="modal-title"><?php eLang('post_detail'); ?></h3>
             </div>
             <div class="modal-body">
@@ -813,28 +734,177 @@ if (isset($post_data) && !empty($post_data)) {
             $('#list-post-scheduled').removeAttr('style');
         });
 
-        $('#list-post').DataTable({
-            "oLanguage": {
-                "sEmptyTable": "No post found."
-            },
-            "aLengthMenu": [[15, 25, 50, 100], [15, 25, 50, 100]],
-            "pageLength": 15,
-            "pagingType": "full",
-            "dom": 'lrtip',
-            "order": [],
-            "columnDefs": [
-                {
-                    'targets': [0, 3],
-                    'orderable': false,
+        const listPostDT = $('#list-post').DataTable({
+            processing: true,
+            serverSide: true,
+            paging: true,
+            searching: false,
+            lengthChange: false,
+            ajax: {
+                url: "<?php echo $router->generate('quick_post_by_status_json') ?>?status=2",
+                data: function(d) {
+                    d.searchValue = $('#searchInputquickpost').val();
                 },
-                {width: '220px', targets: 1},
-                {width: '80px', targets: 3},
-            ]
+                type: "GET",
+                dataSrc: "data" // مسیر آرایه‌ای که پست‌ها درش هستن
+            },
+            columns: [
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        return `<input type="checkbox" name="post_id[]" class="row-select" value="${row.post_id}">`;
+                    }
+                },
+                {
+                    data: null, orderable: false,
+                    searchable: false, render: function (data, type, row, meta) {
+                        return meta.row + 1 + meta.settings._iDisplayStart
+                    }
+                },
+                {
+                    data: "message", render: function (data, type, row) {
+                        return String(data).substring(0, 100) + ' ...';
+                    }
+                },
+                {
+                    data: null, orderable: false,
+                    searchable: false, render: function (data, type, row) {
+                        return '';
+                        // let output = '';
+                        // for (let network in data) {
+                        //     let space = data[network];
+                        //     if (Array.isArray(space)) {
+                        //         space = space.join(", ");
+                        //     }
+                        //     output += `<span class="network">${network}: ${space}</span><br>`;
+                        // }
+                        // console.log({data,output,type,row})
+                        // return output;
+                    },
+                },
+                {
+                    data: null, orderable: false,
+                    searchable: false, render: function (data, type, row) {
+                        const uploadsDirURL = "<?= SAP_IMG_URL ?>";
+                        const assetsDirURL = "<?= SAP_SITE_URL ?>/assets";
+                        let output = "";
+
+                        if (row.media) {
+                            try {
+                                const mediaArray = JSON.parse(row.media);
+                                output += `<div class='flex gap-2'>`;
+                                mediaArray.forEach(media => {
+                                    const src = uploadsDirURL + media.src;
+                                    if (isImage(src)) {
+                                        output += `<div><a href="${src}" target="_blank"><img class="media-thumbnail" src="${src}" /></a></div>`;
+                                    } else if (isVideo(src)) {
+                                        output += `<div><a href="${src}" target="_blank"><i class='fa fa-file-video-o' aria-hidden='true'></i></a></div>`;
+                                    }
+                                });
+                                output += `</div>`;
+                            } catch (e) {
+                                output = "خطا در پردازش مدیا";
+                            }
+                        } else if (row.video) {
+                            const src = uploadsDirURL + row.video;
+                            output = `<a href="${src}" target="_blank"><i class='fa fa-file-video-o' aria-hidden='true'></i></a>`;
+                        } else if (row.image && row.image !== "0") {
+                            const src = uploadsDirURL + row.image;
+                            output = `<img class="media-thumbnail" src="${src}" />`;
+                        } else {
+                            output = `<img class="media-thumbnail" src="${assetsDirURL}/images/no-imag.png" />`;
+                        }
+
+                        return output;
+                    }
+                },
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        const editUrl = `<?= $router->generate('quick_viewpost', ['id' => '__POST_ID__']) ?>`.replace('__POST_ID__', row.post_id);
+                        const editBtn = `<a title="Edit" href="${editUrl}"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
+
+                        const deleteBtn = `<a class="delete_quick_post" data-toggle="tooltip" title="Delete" data-placement="top" aria-data-id="${row.post_id}"><i class="fa fa-trash" aria-hidden="true"></i></a>`;
+                        return `<td class="action_icons">${deleteBtn} ${editBtn}</td>`;
+                    }
+                }
+            ],
+            createdRow: function(row,data,dataIndex) {
+              $(row).attr('id','quick_post_' + data.post_id);
+            },
+            drawCallback: function() {
+                $(document).on('click', '.delete_quick_post', function () {
+                    var obj = $(this);
+                    var post_id = $(this).attr('aria-data-id');
+                    console.log({post_id})
+                    if (confirm("<?php echo $sap_common->lang('delete_record_conform_msg'); ?>")) {
+                        $.ajax({
+                            type: 'POST',
+                            url: SAP_SITE_URL + '/quick-post/delete/',
+                            data: {post_id: post_id},
+                            success: function (result) {
+                                var result = jQuery.parseJSON(result);
+                                if (result.status) {
+                                    $('#quick_post_' + post_id).remove();
+                                    if ($("#list-post tbody tr").length == 0) {
+                                        $("#list-post").find('tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data available in table</td></tr>');
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $(document).on('change', '.searchByGender_div', function () {
+                    var selected_val = $(this).find('option:selected').val();
+                    console.log('change',{selected_val})
+                    if (selected_val == 'delete') {
+                        var id = [];
+                        $("input[name='post_id[]']:checked").each(function (i) {
+                            id[i] = $(this).val();
+                        });
+
+                        //tell you if the array is empty
+                        if (id.length === 0) {
+                            alert("<?php echo $sap_common->lang('select_checkbox_alert'); ?>");
+
+                        } else if (confirm("<?php echo $sap_common->lang('delete_selected_records_conform_msg'); ?>")) {
+
+                            $.ajax({
+                                url: SAP_SITE_URL + '/quick-post/delete_multiple/',
+                                method: 'POST',
+                                data: {id: id},
+                                success: function (result) {
+                                    // window.location.reload();
+                                    console.log({result})
+                                    // var result = jQuery.parseJSON(result);
+                                    // if (result.status) {
+                                    //     window.location.replace(result.redirect_url);
+                                    // }
+                                }
+                            });
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+            }
         });
 
         // Attach DataTables search to custom input
+        let searchListPostDTTimeout;
         $('#searchInputquickpost').on('keyup', function () {
-            $('#list-post').DataTable().search(this.value).draw();
+            if (searchListPostDTTimeout) {
+                clearTimeout(searchListPostDTTimeout);
+            }
+
+            searchListPostDTTimeout = setTimeout(() => {
+                listPostDT.ajax.reload();
+            }, 500);
         });
 
         $('#list-post-scheduled').DataTable({
@@ -856,6 +926,10 @@ if (isset($post_data) && !empty($post_data)) {
                     'orderable': false
                 }
             ],
+            "columns": [
+                {data: "post_id"},
+
+            ],
         });
 
         // Attach DataTables search to custom input
@@ -863,62 +937,8 @@ if (isset($post_data) && !empty($post_data)) {
             $('#list-post-scheduled').DataTable().search(this.value).draw();
         });
 
-        $(document).on('click', '.delete_quick_post', function () {
-            var obj = $(this);
-            var post_id = $(this).attr('aria-data-id');
-            if (confirm("<?php echo $sap_common->lang('delete_record_conform_msg'); ?>")) {
-                $.ajax({
-                    type: 'POST',
-                    url: SAP_SITE_URL + '/quick-post/delete/',
-                    data: {post_id: post_id},
-                    success: function (result) {
-                        window.location.reload();
-                        // var result = jQuery.parseJSON(result);
-                        // if (result.status) {
-                        //     $('#quick_post_' + post_id).remove();
-                        //     if ($("#list-post tbody tr").length == 0) {
-                        //         $("#list-post").find('tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data available in table</td></tr>');
-                        //     }
-                        // }
-                    }
-                });
-            }
 
-        });
 
-        $(document).on('change', '.searchByGender_div', function () {
-            var selected_val = $(this).find('option:selected').val();
-            if (selected_val == 'delete') {
-                var id = [];
-                $("input[name='post_id[]']:checked").each(function (i) {
-                    id[i] = $(this).val();
-                });
-
-                //tell you if the array is empty
-                if (id.length === 0) {
-                    alert("<?php echo $sap_common->lang('select_checkbox_alert'); ?>");
-
-                } else if (confirm("<?php echo $sap_common->lang('delete_selected_records_conform_msg'); ?>")) {
-
-                    $.ajax({
-                        url: SAP_SITE_URL + '/quick-post/delete_multiple/',
-                        method: 'POST',
-                        data: {id: id},
-                        success: function (result) {
-                            window.location.reload();
-
-                            // var result = jQuery.parseJSON(result);
-                            // if (result.status) {
-                            //     window.location.replace(result.redirect_url);
-                            // }
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            }
-        });
-        
         $(document).on('click', '.post-detail', function () {
             var obj = $(this);
             var log_id = $(this).attr('aria-data-id');
@@ -952,10 +972,10 @@ if (isset($post_data) && !empty($post_data)) {
             $('#myModal').modal('show');
         });
 
-        $(document).on("error", "#list-post img", function() {
+        $(document).on("error", "#list-post img", function () {
             $(this).attr("src", "<?php echo SAP_SITE_URL . '/assets/images/no-imag.png' ?>");
         });
-        $(document).on("error", "#list-post-scheduled img", function() {
+        $(document).on("error", "#list-post-scheduled img", function () {
             $(this).attr("src", "<?php echo SAP_SITE_URL . '/assets/images/no-imag.png' ?>");
         });
     });

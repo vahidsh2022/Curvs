@@ -159,15 +159,15 @@ class Sap_Database {
      * @package Social Auto Poster
      * @since 1.0.0
      */
-    public function query($query) {
+    public function query($query,bool $returnQuery = false) {
 
         $full_query = $this->link->query($query);
 
         if ($this->link->error) {
             $this->log_db_errors($this->link->error, $query);
-            return false;
+            return $returnQuery ? $full_query : false;
         } else {
-            return true;
+            return $returnQuery ? $full_query : true;
         }
     }
 

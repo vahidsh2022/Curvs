@@ -678,8 +678,12 @@ class SAP_Quick_Posts
 
 			if ($is_deleted) {
 				$result = array('status' => '1');
-				unlink($img_path);
-				unlink($video_path);
+                if(!empty($img_path) && file_exists($img_path)){
+                    unlink($img_path);
+                }
+                if(! empty($video_path) && file_exists($img_path)){
+                    unlink($video_path);
+                }
 			} else {
 				$result = array('status' => '0');
 			}
@@ -705,7 +709,9 @@ class SAP_Quick_Posts
 			foreach ($post_id as $key => $value) {
 				$conditions = array('post_id' => $value);
 				$is_deleted = $this->db->delete($this->table_name, $conditions);
-				$this->db->delete($this->post_meta_table_name, $conditions);
+				if($this->db->delete($this->post_meta_table_name, $conditions)) {
+                    $result[] = $post_id;
+                }
 			}
 			if ($is_deleted) {
 				$url = SAP_SITE_URL . "/quick-post/";
@@ -714,7 +720,10 @@ class SAP_Quick_Posts
 			} else {
 				$result = array('status' => '0');
 			}
-			echo json_encode($result);
+			echo json_encode([
+                'ids' => $result,
+                'status' => count($result) === count($post_id) ? 0 : 1
+            ]);
 			die;
 		}
 	}
@@ -819,6 +828,51 @@ class SAP_Quick_Posts
 		//Return result
 		return $result;
 	}
+
+
+    public function get_posts_by_status_json()
+    {
+        $status = $_GET['status'];
+        $limit = 10;
+        $page = isset($_GET['start']) ? $_GET['start'] : 0;
+        $offset = $page;
+
+        $searchValue = isset($_GET['searchValue']) ? trim($_GET['searchValue']) : '';
+        $tableName = $this->table_name;
+
+        $where = "WHERE status = $status";
+
+        if (!empty($searchValue)) {
+            // ضد حملات SQL Injection اگر PDO یا چیزی نداری
+            $searchValue = $this->db->escape($searchValue);
+            $where .= " AND message LIKE '%$searchValue%'";
+        }
+
+        // ساختن query اصلی با فیلتر و صفحه‌بندی
+        $query = "SELECT * FROM $tableName $where LIMIT $limit OFFSET $offset";
+        try {
+            $result = $this->db->query($query, true);
+        } catch (Exception $exception) {
+            REST($exception->getMessage());
+        }
+        // شمارش تعداد کل رکوردهای فیلترشده
+        $count_query = "SELECT COUNT(*) FROM $tableName $where";
+        $count_result = $this->db->query($count_query, true);
+        $recordsFiltered = $count_result->fetch_row()[0];
+
+        // شمارش کل بدون فیلتر
+        $total_query = "SELECT COUNT(*) FROM $tableName WHERE status = $status";
+        $total_result = $this->db->query($total_query, true);
+        $recordsTotal = $total_result->fetch_row()[0];
+
+        // آماده‌سازی خروجی
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        REST_FOR_DATATABLE($data, $recordsTotal,$recordsFiltered, intval($_GET['draw'] ?? 1));
+    }
 
 	/**
 	 * Update option settings

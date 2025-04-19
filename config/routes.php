@@ -105,7 +105,7 @@ $router->map('POST', '/quick-post/delete_multiple/', 'Quick_Posts#delete_multipl
 $router->map('GET|POST', '/quick-post/view/[i:id]', 'Quick_Posts#view_post', 'quick_viewpost');
 $router->map('GET|POST', '/quick-post/update/', 'Quick_Posts#update_post', 'quick_updatepost');
 $router->map('GET|POST', '/quick-post/sap_generate_caption/', 'Quick_Posts#sap_generate_caption', 'sap_generate_caption');
-
+$router->map('GET','/quick-post/json/','Quick_Posts#get_posts_by_status_json','quick_post_by_status_json');
 
 //Quick Posts Routes
 $router->map('GET', '/mingle-update/', 'Mingle_Update#index', 'mingle_update');

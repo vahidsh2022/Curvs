@@ -85,6 +85,20 @@ function REST($data, $statusCode = 200, $headers = [])
     exit();
 }
 
+function REST_FOR_DATATABLE($data,$total_records,$total_filtered_records,$draw)
+{
+    $response = [
+        'status' => 200,
+        "draw" => intval($draw),  // برای handling dataTable's draw counter
+        "recordsTotal" => intval($total_records),
+        "recordsFiltered" => intval($total_filtered_records),  // فیلترشده‌ها، در اینجا فیلتر کردن از سمت جیسون انجام می‌شود
+        "data" => $data
+    ];
+
+    echo json_encode($response,JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
 function toTimestamp(string $datetime, string $format = 'Y-m-d H:i:s'): ?int
 {
     $date = DateTime::createFromFormat($format, $datetime);
