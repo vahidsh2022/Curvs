@@ -849,6 +849,7 @@ class SAP_Quick_Posts
         FROM $tableName AS p
         LEFT JOIN sap_quick_postmeta AS m ON p.post_id = m.post_id AND m.meta_key = 'sap_networks'
         $where
+        ORDER BY p.created_date DESC
         LIMIT $limit OFFSET $offset
     ";
         try {
