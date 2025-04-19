@@ -991,3 +991,7 @@ ALTER TABLE `sap_quick_posts`
 /* sap_quick_posts */
 ALTER TABLE `sap_crawled_posts`
     ADD COLUMN data_json JSON DEFAULT NULL AFTER token_count;
+
+/* sap_crawlers */
+ALTER TABLE `sap_crawlers`
+    MODIFY `translate_text` TEXT;
