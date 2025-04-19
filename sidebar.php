@@ -106,13 +106,13 @@ if ( !defined( 'SAP_APP_PATH' ) ) {
 					</ul>
 				</li>
 
-                <li class="<?php echo strstr($match['name'],'calender') ? "active":"";?>">
-                    <a href="<?php echo $router->generate('calender'); ?>" class="calender-menu">
-                        <i class="fa fa-calendar"></i>
-                        <span><?php elang('calender_title'); ?></span>
-                        <span class="pull-right-container">
-                    </a>
-                </li>
+<!--                <li class="--><?php //echo strstr($match['name'],'calender') ? "active":"";?><!--">-->
+<!--                    <a href="--><?php //echo $router->generate('calender'); ?><!--" class="calender-menu">-->
+<!--                        <i class="fa fa-calendar"></i>-->
+<!--                        <span>--><?php //elang('calender_title'); ?><!--</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                    </a>-->
+<!--                </li>-->
 				<li class="<?php echo ($match['name'] == 'settings') ? "active":"";?>">
 					<a href="<?php echo $router->generate('settings'); ?>">
 						<i class="fa fa-cog"></i> <span><?php echo $sap_common->lang('setup'); ?></span>

@@ -10,6 +10,17 @@ $(function () {
   /**
    * Get access to plugins
    */
+  $(document).on('click', '[data-toggle="push-menu"]', function (e) {
+    setTimeout(function () {
+      if ($('body').hasClass('sidebar-collapse')) {
+        // Sidebar is collapsed
+        $('#logo-img').attr('src', 'http://localhost/Curvs/assets/images/Curvs.11.png');
+      } else {
+        // Sidebar is expanded
+        $('#logo-img').attr('src', 'http://localhost/Curvs/assets/images/Curvs12.png');
+      }
+    }, 50);
+  });
 
   $('[data-toggle="control-sidebar"]').controlSidebar()
   $('[data-toggle="push-menu"]').pushMenu()

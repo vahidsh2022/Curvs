@@ -84,9 +84,9 @@ include SAP_APP_PATH . 'sidebar.php';
                                         </label>
                                         <div class="col-sm-9 col-xs-12">
                                             <input required type="text" class="form-control animated-input"
-                                                id="listening_channel" name="crawler[listening_channel]"
-                                                value="<?php echo $crawler['listening_channel']; ?>"
-                                                placeholder="<?php eLang('crwlr_chnl_plchld'); ?>">
+                                                    id="listening_channel" name="crawler[listening_channel]"
+                                                    value="<?php echo $crawler['listening_channel']; ?>"
+                                                   placeholder="<?php eLang('crwlr_chnl_plchld'); ?>">
                                         </div>
                                     </div>
 
@@ -351,7 +351,7 @@ include SAP_APP_PATH . 'sidebar.php';
                                     </div>
 
                                     <div id="WatermarkContiner"
-                                        style="display: flex; justify-content: space-around; align-items: center; width: 100%; flex-direction: row-reverse;">
+                                        style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-direction: row-reverse;">
                                         <!-- Watermark Preview Box -->
                                         <div class="form-group">
                                             <div class="" style="width: 95%;">
@@ -376,33 +376,35 @@ include SAP_APP_PATH . 'sidebar.php';
                                                     title="<?php eLang('crwlr_wtrmrk_ps_tooltip'); ?>"></i>
                                             </label>
                                             <div class="col-sm-9 col-xs-12">
-                                                <select
-                                                    style="color: black;z-index: 999; width:70%; border: 1px solid #21a6f3;padding: 7px 12px; box-shadow: 1px 1px 5px 1px rgb(0, 136, 255); border-radius: 5px; display: flex ; justify-content: center;align-items: center; overflow: visible !important ; height: 35px;"
-                                                    id="watermark_pos" name="crawler[watermark_pos]">
-                                                    <option value=""><?php eLang('choose'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'center' ? 'selected' : ''; ?>
-                                                        value="center"><?php eLang('center'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'top-middle' ? 'selected' : ''; ?>
-                                                        value="top-middle"><?php eLang('top-middle'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'bottom-middle' ? 'selected' : ''; ?>
-                                                        value="bottom-middle"><?php eLang('bottom-middle'); ?>
-                                                    </option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'middle-left' ? 'selected' : ''; ?>
-                                                        value="middle-left"><?php eLang('middle-left'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'middle-right' ? 'selected' : ''; ?>
-                                                        value="middle-right"><?php eLang('middle-right'); ?>
-                                                    </option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'top-left' ? 'selected' : ''; ?>
-                                                        value="top-left"><?php eLang('top-left'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'bottom-left' ? 'selected' : ''; ?>
-                                                        value="bottom-left"><?php eLang('bottom-left'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'top-right' ? 'selected' : ''; ?>
-                                                        value="top-right"><?php eLang('top-right'); ?></option>
-                                                    <option <?php echo $crawler['watermark_pos'] == 'bottom-right' ? 'selected' : ''; ?>
-                                                        value="bottom-right"><?php eLang('bottom-right'); ?>
-                                                    </option>
-                                                </select>
-                                                <div class="fa fa-trash color-red" id="watermarkDelete"></div>
+                                                <div class="d-flex" style="align-items: center">
+                                                    <select
+                                                            style="color: black;z-index: 999; width:70%; border: 1px solid #21a6f3;padding: 7px 12px; box-shadow: 1px 1px 5px 1px rgb(0, 136, 255); border-radius: 5px; display: flex ; justify-content: center;align-items: center; overflow: visible !important ; height: 35px;"
+                                                            id="watermark_pos" name="crawler[watermark_pos]">
+                                                        <option value=""><?php eLang('choose'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'center' ? 'selected' : ''; ?>
+                                                                value="center"><?php eLang('center'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'top-middle' ? 'selected' : ''; ?>
+                                                                value="top-middle"><?php eLang('top-middle'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'bottom-middle' ? 'selected' : ''; ?>
+                                                                value="bottom-middle"><?php eLang('bottom-middle'); ?>
+                                                        </option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'middle-left' ? 'selected' : ''; ?>
+                                                                value="middle-left"><?php eLang('middle-left'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'middle-right' ? 'selected' : ''; ?>
+                                                                value="middle-right"><?php eLang('middle-right'); ?>
+                                                        </option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'top-left' ? 'selected' : ''; ?>
+                                                                value="top-left"><?php eLang('top-left'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'bottom-left' ? 'selected' : ''; ?>
+                                                                value="bottom-left"><?php eLang('bottom-left'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'top-right' ? 'selected' : ''; ?>
+                                                                value="top-right"><?php eLang('top-right'); ?></option>
+                                                        <option <?php echo $crawler['watermark_pos'] == 'bottom-right' ? 'selected' : ''; ?>
+                                                                value="bottom-right"><?php eLang('bottom-right'); ?>
+                                                        </option>
+                                                    </select>
+                                                    <div class="fa fa-trash color-red" id="watermarkDelete" style="font-size: 32px; margin-left: 10px; cursor: pointer"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
