@@ -513,7 +513,7 @@ if (isset($post_data) && !empty($post_data)) {
                         <div class="box-body sap-custom-drop-down-wrap 789">
                             <div class="d-flex flex-wrap row">
                                 <div class="col-md-4">
-                                    <select id='searchByGender' class="searchByGender_div" style="width: 100%;">
+                                    <select id='bulkPostPublished' class="searchByGender_div" style="width: 100%;">
                                         <option value=''><?php echo $sap_common->lang('bulk_action'); ?></option>
                                         <option value='delete'><?php echo $sap_common->lang('delete'); ?></option>
                                     </select>
@@ -550,7 +550,7 @@ if (isset($post_data) && !empty($post_data)) {
                         <div class="box-body sap-custom-drop-down-wrap 789">
                             <div class="d-flex flex-wrap row">
                                 <div class="col-md-4">
-                                    <select id='searchByGender' class="searchByGender_div" style="width: 100%;">
+                                    <select id='bulkPostScheduled' class="searchByGender_div" style="width: 100%;">
                                         <option value=''><?php echo $sap_common->lang('bulk_action'); ?></option>
                                         <option value='delete'><?php echo $sap_common->lang('delete'); ?></option>
                                     </select>
@@ -762,9 +762,8 @@ if (isset($post_data) && !empty($post_data)) {
                     }
                 });
 
-                $(document).on('change', '.searchByGender_div', function () {
+                $(document).on('change', '#bulkPostPublished', function () {
                     var selected_val = $(this).find('option:selected').val();
-                    console.log('change',{selected_val})
                     if (selected_val == 'delete') {
                         var id = [];
                         $("input[name='post_id[]']:checked").each(function (i) {
@@ -782,12 +781,15 @@ if (isset($post_data) && !empty($post_data)) {
                                 method: 'POST',
                                 data: {id: id},
                                 success: function (result) {
-                                    // window.location.reload();
-                                    console.log({result})
-                                    // var result = jQuery.parseJSON(result);
-                                    // if (result.status) {
-                                    //     window.location.replace(result.redirect_url);
-                                    // }
+                                    var result = jQuery.parseJSON(result);
+                                    if (result.status) {
+                                        result.ids.forEach(post_id => {
+                                            $('#quick_post_' + post_id).remove();
+                                        })
+                                        if ($("#list-post tbody tr").length == 0) {
+                                            $("#list-post").find('tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data available in table</td></tr>');
+                                        }
+                                    }
                                 }
                             });
                         } else {
@@ -919,7 +921,6 @@ if (isset($post_data) && !empty($post_data)) {
                 $(document).on('click', '#list-post-scheduled .delete_quick_post', function () {
                     var obj = $(this);
                     var post_id = $(this).attr('aria-data-id');
-                    console.log({post_id})
                     if (confirm("<?php echo $sap_common->lang('delete_record_conform_msg'); ?>")) {
                         $.ajax({
                             type: 'POST',
@@ -927,7 +928,6 @@ if (isset($post_data) && !empty($post_data)) {
                             data: {post_id: post_id},
                             success: function (result) {
                                 var result = jQuery.parseJSON(result);
-                                console.log({result})
                                 if (result.status) {
                                     $('#quick_post_' + post_id).remove();
                                     if ($("#list-post-scheduled tbody tr").length == 0) {
@@ -939,7 +939,7 @@ if (isset($post_data) && !empty($post_data)) {
                     }
                 });
 
-                $(document).on('change', '.searchByGender_div', function () {
+                $(document).on('change', '#bulkPostScheduled', function () {
                     var selected_val = $(this).find('option:selected').val();
                     if (selected_val == 'delete') {
                         var id = [];
@@ -958,12 +958,15 @@ if (isset($post_data) && !empty($post_data)) {
                                 method: 'POST',
                                 data: {id: id},
                                 success: function (result) {
-                                    // window.location.reload();
-                                    console.log({result})
-                                    // var result = jQuery.parseJSON(result);
-                                    // if (result.status) {
-                                    //     window.location.replace(result.redirect_url);
-                                    // }
+                                    var result = jQuery.parseJSON(result);
+                                    if (result.status) {
+                                        result.ids.forEach(post_id => {
+                                            $('#quick_post_' + post_id).remove();
+                                        })
+                                        if ($("#list-post-scheduled tbody tr").length == 0) {
+                                            $("#list-post-scheduled").find('tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data available in table</td></tr>');
+                                        }
+                                    }
                                 }
                             });
                         } else {

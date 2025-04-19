@@ -708,21 +708,15 @@ class SAP_Quick_Posts
 			$post_id = $_REQUEST['id'];
 			foreach ($post_id as $key => $value) {
 				$conditions = array('post_id' => $value);
-				$is_deleted = $this->db->delete($this->table_name, $conditions);
-				if($this->db->delete($this->post_meta_table_name, $conditions)) {
-                    $result[] = $post_id;
+				if($this->db->delete($this->table_name, $conditions)) {
+                    $result[] = $value;
                 }
+                $this->db->delete($this->post_meta_table_name, $conditions);
 			}
-			if ($is_deleted) {
-				$url = SAP_SITE_URL . "/quick-post/";
-				$result = array('status' => '1', "redirect_url" => $url);
-				$this->flash->setFlash('Selected posts has been deleted', 'success');
-			} else {
-				$result = array('status' => '0');
-			}
+
 			echo json_encode([
                 'ids' => $result,
-                'status' => count($result) === count($post_id) ? 0 : 1
+                'status' => count($result) === count($post_id) ? 1 : 0
             ]);
 			die;
 		}
