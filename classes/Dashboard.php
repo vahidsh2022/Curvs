@@ -148,7 +148,7 @@ class SAP_Dashboard
         $socialIconPath = SAP_SITE_URL . '/assets/images/social-icon';
         switch ($type) {
             case 'twitter':
-                return $socialIconPath . '/twitter.svg';
+                return $socialIconPath . '/twitter.png';
             case 'telegram':
                 return $socialIconPath . '/telegram.svg';
             case 'instagram':
@@ -179,7 +179,7 @@ class SAP_Dashboard
         $socialIconPath = SAP_SITE_URL . '/assets/images/social-icon';
         switch ($platform) {
             case 'web':
-                return $socialIconPath . '/twitter.svg';
+                return $socialIconPath . '/web.png';
             case 'telegram':
                 return $socialIconPath . '/telegram.svg';
             default: {
