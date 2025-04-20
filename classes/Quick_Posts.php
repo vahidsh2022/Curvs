@@ -246,6 +246,18 @@ class SAP_Quick_Posts
                 $_POST['media'] = json_encode($media);
                 $_POST['video'] = '';
                 $_POST['image'] = '';
+            } else if (!empty($_POST['image_url'])) {
+                $uploadPath = $fileUpload->uploadFileFromUrl($_POST['image_url']);
+                if (!is_int($uploadPath) || !is_numeric($uploadPath)) {
+                    $_POST['image'] = $uploadPath;
+                    $_POST['video'] = '';
+                    $_POST['media'] = json_encode([]);
+                    $validate_size = 1;
+                } else {
+                    $_POST['image'] = '';
+                    $_POST['video'] = '';
+                    $_POST['media'] = json_encode([]);
+                }
             } else {
                 $_POST['video'] = '';
                 $_POST['image'] = '';
