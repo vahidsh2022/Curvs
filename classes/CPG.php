@@ -98,9 +98,7 @@ class SAP_CPG
     {
         $escapeColumns = [
             'original_subject',
-            'original_message',
-            'new_message',
-            'tags'
+
         ];
 
         foreach ($escapeColumns as $column) {
