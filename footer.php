@@ -130,7 +130,7 @@ if(strpos($match['name'],'bots_profiles') !== false) {
 }
 
 if(strpos($match['name'],'settings') !== false) {
-    echo '<script type="text/javascript" src="' . SAP_SITE_URL . '/assets/js/channel_settings.js?id=2"></script>';
+    echo '<script type="text/javascript" src="' . SAP_SITE_URL . '/assets/js/channel_settings.js?id=3"></script>';
 }
 
 

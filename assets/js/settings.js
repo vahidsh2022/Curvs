@@ -313,8 +313,6 @@ jQuery(document).ready(function ($) {
         $("#created_telegram_count").val(created_telegram_count);
 
 
-        // clone_row.find('.sap-grant-reset-data').html('');
-
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last .sap_telegram_channel_id').attr('name', 'sap_telegram_options[telegram_keys][' + last_row_id + '][channel_id]').val('');
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last .sap_telegram_footer').attr('name', 'sap_telegram_options[telegram_keys][' + last_row_id + '][footer]').val('');
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last .sap_telegram_limit_type').attr('name', 'sap_telegram_options[telegram_keys][' + last_row_id + '][limit_type]').val('');
@@ -324,8 +322,24 @@ jQuery(document).ready(function ($) {
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last').addClass("show-remove-icon");
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last').attr('data-row-id', last_row_id);
         jQuery(this).parents('.sap-api-telegram-settings').find('.sap-telegram-account-details:last').find('.col-sm-6').removeClass('has-error');
+        telegramChannelIdsInputValidation();
         return false;
     });
+
+    const telegramChannelIdsInputValidation = () => {
+        document.querySelectorAll('.sap_telegram_channel_id').forEach(sapTelegramChannelIdsInput => {
+                sapTelegramChannelIdsInput.addEventListener('input', function () {
+                    const errorMessage = sapTelegramChannelIdsInput.parentElement.querySelector('.error_message_starts_with_at');
+
+                    if (sapTelegramChannelIdsInput.value && !sapTelegramChannelIdsInput.value.startsWith('@')) {
+                        if (errorMessage) errorMessage.style.display = 'block';
+                    } else {
+                        if (errorMessage) errorMessage.style.display = 'none';
+                    }
+                });
+        });
+    }
+    telegramChannelIdsInputValidation();
 
     $('form#telegram-settings').on('submit', function(event) {
         $('.sap-telegram-channel-id,.sap-telegram-footer').each(function() {

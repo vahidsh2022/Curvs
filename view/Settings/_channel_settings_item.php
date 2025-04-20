@@ -21,11 +21,14 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label class="heading-label">
-                        <?php echo $sap_options_network === 'telegram' ? 'Channel ID' : 'Page Name' ?>
+                        <?php echo $sap_options_network === 'telegram' ? 'Channel ID ( starts with @ )' : 'Page Name' ?>
                     </label>
                     <input class="form-control sap_<?php echo $sap_options_network ?>_channel_id" name="<?php echo $prefixInpName ?>[channel_id]"
                            value="<?php echo @$sap_options_channel['channel_id'] ?>"
                            placeholder="Enter Page Name." type="text">
+                    <p class="error_message_starts_with_at" style="display: none;color: red;font-weight: bold">
+                        Must starts with @
+                    </p>
                 </div>
                 <div class="col-sm-3">
                     <label>Limit Type</label>
