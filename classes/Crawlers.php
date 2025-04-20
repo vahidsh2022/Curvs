@@ -208,9 +208,9 @@ class SAP_Crawlers
 
     public function pendings_active()
     {
-        if (sap_get_current_user_role() !== 'superadmin') {
-            $this->common->redirect('login');
-        }
+//        if (sap_get_current_user_role() !== 'superadmin') {
+//            $this->common->redirect('login');
+//        }
         $crawler = $this->getData($this->_id);
         if ($this->send2CrawlerServer($this->_id, $crawler['platform'])) {
             $this->flash->setFlash(lang('crwlr_actv_sucs'), 'success');
