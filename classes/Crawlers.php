@@ -420,16 +420,18 @@ class SAP_Crawlers
         ]);
 
         $response = curl_exec($curl);
+        $isSuccess = str_contains($response,'success');
+
         file_put_contents(SAP_LOG_DIR . "/callCrawler/$id-$platform.log", print_r([
             'curl' => curl_error($curl),
             'info' => curl_getinfo($curl),
             'request' => $request,
-            'response' => $response
+            'response' => $response,
+            'is_success' => $isSuccess
         ], true));
         curl_close($curl);
 
         $updates = ['sent_date' => date('Y-m-d H:i:s')];
-        $isSuccess = str_contains($response,'success');
         if ($isSuccess) {
             $updates['status'] = 'active';
         }
