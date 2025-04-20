@@ -297,6 +297,7 @@ class SAP_Crawlers
         }
 
         $data = $this->db->escape($data);
+        dd($data);
         if (!$this->db->insert($this->table, $data)) {
             $this->flash->setFlash('error happen, try agin later', 'error');
             return false;
