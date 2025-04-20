@@ -283,7 +283,6 @@ class SAP_Crawlers
         $errors = $this->validation($data);
         if (!empty($errors)) {
             $this->flash->setFlash($errors, 'error');
-            REST($errors);
             return false;
         }
 
@@ -302,7 +301,6 @@ class SAP_Crawlers
             $this->flash->setFlash('error happen, try agin later', 'error');
             return false;
         }
-        REST($this->db->link->error);
         return true;
     }
 
@@ -422,18 +420,16 @@ class SAP_Crawlers
         ]);
 
         $response = curl_exec($curl);
-        $isSuccess = str_contains($response,'success');
-
         file_put_contents(SAP_LOG_DIR . "/callCrawler/$id-$platform.log", print_r([
             'curl' => curl_error($curl),
             'info' => curl_getinfo($curl),
             'request' => $request,
-            'response' => $response,
-            'is_success' => $isSuccess
+            'response' => $response
         ], true));
         curl_close($curl);
 
         $updates = ['sent_date' => date('Y-m-d H:i:s')];
+        $isSuccess = $response == '{"message":"success"}';
         if ($isSuccess) {
             $updates['status'] = 'active';
         }
