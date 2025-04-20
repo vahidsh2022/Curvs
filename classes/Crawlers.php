@@ -208,11 +208,11 @@ class SAP_Crawlers
 
     public function pendings_active()
     {
-//        if (sap_get_current_user_role() !== 'superadmin') {
-//            $this->common->redirect('login');
-//        }
-        $crawler = $this->getData($this->_id);
+        if(empty(sap_get_current_user_id())) {
+            $this->common->redirect('login');
+        }
 
+        $crawler = $this->getData($this->_id);
         if ($this->send2CrawlerServer($this->_id, $crawler['platform'])) {
             $this->flash->setFlash(lang('crwlr_actv_sucs'), 'success');
         } else {
@@ -405,7 +405,6 @@ class SAP_Crawlers
     public function send2CrawlerServer(int $id, $platform)
     {
         $request = $this->getRequest($id);
-
         $curl = curl_init();
 
         curl_setopt_array($curl, [
@@ -474,9 +473,7 @@ class SAP_Crawlers
                 'channels' => [],
             ];
             $configs = $this->settings->get_user_setting("sap_{$network}_options", $userId);
-            dd('first cg',$configs,$network,json_encode($userId));
             $configs = array_column($configs["{$network}_keys"], null, 'channel_id');
-
             foreach ($items as $name => $value) {
                 $limit = empty($configs[$name]['limit_value']) ? 1 : (int) $configs[$name]['limit_value'];
                 $interval = ($configs[$name]['limit_type'] == 'daily' ? 86400 : 3600) / $limit;
@@ -510,16 +507,10 @@ class SAP_Crawlers
         return "[\"$string\"]";
     }
 
-    protected function getRequest($id)
+    protected function getRequest(int $id)
     {
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
-        try {
-            $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
-            dd('cch',$channels);
-        } catch (Exception $exception ) {
-            dd($exception->getMessage());
-        }
-
+        $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
 
         $deleteBefore = $this->split($crawler->delete_before);
         $deleteAfter = $this->split($crawler->delete_after);
