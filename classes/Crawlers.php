@@ -474,7 +474,7 @@ class SAP_Crawlers
                 'channels' => [],
             ];
             $configs = $this->settings->get_user_setting("sap_{$network}_options", $userId);
-            dd('first cg',$configs,$network,$userId);
+            dd('first cg',$configs,$network,json_encode($userId));
             $configs = array_column($configs["{$network}_keys"], null, 'channel_id');
 
             foreach ($items as $name => $value) {
