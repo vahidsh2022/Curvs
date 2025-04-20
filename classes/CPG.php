@@ -206,7 +206,7 @@ class SAP_CPG
         ], true));
         if(! empty($additional_notes)) {
             file_put_contents($logDir . "manage_errors.log", print_r([
-                'save error cpg'
+                'save additional notes'
             ], true));
             REST($cpg);
             return;

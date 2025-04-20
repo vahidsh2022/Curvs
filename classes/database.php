@@ -37,6 +37,10 @@ class Sap_Database {
         $message .= 'Error: ' . $error;
         $message .= '</p>';
 
+        $logDir = SAP_LOG_DIR;
+        file_put_contents($logDir . "manage_errors.log", print_r([
+            $message
+        ], true));
         if (defined('SEND_ERRORS_TO')) {
 
             $headers = 'MIME-Version: 1.0' . "\r\n";
