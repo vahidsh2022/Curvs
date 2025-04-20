@@ -511,8 +511,8 @@ class SAP_Crawlers
     protected function getRequest($id)
     {
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
-        dd('cc',$crawler);
         $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
+        dd('cch',$channels);
 
         $deleteBefore = $this->split($crawler->delete_before);
         $deleteAfter = $this->split($crawler->delete_after);
