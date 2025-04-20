@@ -211,6 +211,7 @@ class SAP_Crawlers
     {
         if(empty(sap_get_current_user_id())) {
             $this->common->redirect('login');
+            return false;
         }
 
         $crawler = $this->getData($this->_id);
@@ -422,6 +423,7 @@ class SAP_Crawlers
         ]);
 
         $response = curl_exec($curl);
+
         file_put_contents(SAP_LOG_DIR . "/callCrawler/$id-$platform.log", print_r([
             'curl' => curl_error($curl),
             'info' => curl_getinfo($curl),
@@ -511,39 +513,40 @@ class SAP_Crawlers
     protected function getRequest(int $id)
     {
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
-        $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
 
+        $channels = $this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id);
         $deleteBefore = $this->split($crawler->delete_before);
         $deleteAfter = $this->split($crawler->delete_after);
-
         $replaceBefore = $this->replacingFormater($crawler->replace_before);
         $replaceAfter = $this->replacingFormater($crawler->replace_after);
-        $isActive = $crawler->is_active ? 'true' : 'false';
-        $watermark = empty($crawler->watermark) ? 'null' : sprintf("\"%s%s\"", SAP_IMG_URL, $crawler->watermark);
-        $pos = empty($crawler->watermark_pos) || $watermark == 'null' ? 'null' : "\"{$crawler->watermark_pos}\"";
-        $valid = empty($crawler->validation_text) ? 'null' : "\"{$crawler->validation_text}\"";
-        $trans = empty($crawler->translate_text) ? 'null' : "\"{$crawler->translate_text}\"";
-        return <<<json
-{
-    "bot_id": $id,
-    "is_active": $isActive,
-    "listening_channel": "$crawler->listening_channel",
-    "data":{
-        "network": $channels,
-        "translation_prompt": "Translate the text into $crawler->translation_language.",
-        "additional_prompt": $trans,
-        "validation_prompt": $valid,
-        "text_replacements": $replaceBefore,
-        "text_deletions": $deleteBefore,
-        "translation_replacements": $replaceAfter,
-        "translation_deletions": $deleteAfter,
-        "generate_tags": $crawler->hashtag_enabled,
-        "generate_image": $crawler->create_image,
-        "image_watermark_url": $watermark,
-        "image_watermark_position": $pos
-    }
-}
-json;
+
+        $isActive = $crawler->is_active ? true : false;
+        $watermark = empty($crawler->watermark) ? null : sprintf("%s%s", SAP_IMG_URL, $crawler->watermark);
+        $pos = empty($crawler->watermark_pos) || $watermark === null ? null : $crawler->watermark_pos;
+        $valid = empty($crawler->validation_text) ? null : $crawler->validation_text;
+        $trans = empty($crawler->translate_text) ? null : $crawler->translate_text;
+
+        $requestArray = [
+            'bot_id' => $id,
+            'is_active' => $isActive,
+            'listening_channel' => $crawler->listening_channel,
+            'data' => [
+                'network' => $channels,
+                'translation_prompt' => "Translate the text into " . $crawler->translation_language,
+                'additional_prompt' => $trans,
+                'validation_prompt' => $valid,
+                'text_replacements' => $replaceBefore,
+                'text_deletions' => $deleteBefore,
+                'translation_replacements' => $replaceAfter,
+                'translation_deletions' => $deleteAfter,
+                'generate_tags' => $crawler->hashtag_enabled,
+                'generate_image' => $crawler->create_image,
+                'image_watermark_url' => $watermark,
+                'image_watermark_position' => $pos
+            ]
+        ];
+
+        return json_encode($requestArray, JSON_UNESCAPED_UNICODE);
     }
 
     public function getIconByPlatform(string $platform = '', int $size = 1): string
