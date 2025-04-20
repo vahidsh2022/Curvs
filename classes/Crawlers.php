@@ -283,6 +283,7 @@ class SAP_Crawlers
         $errors = $this->validation($data);
         if (!empty($errors)) {
             $this->flash->setFlash($errors, 'error');
+            REST($errors);
             return false;
         }
 
@@ -301,6 +302,7 @@ class SAP_Crawlers
             $this->flash->setFlash('error happen, try agin later', 'error');
             return false;
         }
+        REST($this->db->link->error);
         return true;
     }
 
