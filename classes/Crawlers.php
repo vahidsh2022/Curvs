@@ -476,7 +476,6 @@ class SAP_Crawlers
             $configs = $this->settings->get_user_setting("sap_{$network}_options", $userId);
             $configs = array_column($configs["{$network}_keys"], null, 'channel_id');
 
-            dd('cg',$configs);
             foreach ($items as $name => $value) {
                 $limit = empty($configs[$name]['limit_value']) ? 1 : (int) $configs[$name]['limit_value'];
                 $interval = ($configs[$name]['limit_type'] == 'daily' ? 86400 : 3600) / $limit;
@@ -513,8 +512,13 @@ class SAP_Crawlers
     protected function getRequest($id)
     {
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
-        $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
-        dd('cch',$channels);
+        try {
+            $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
+            dd('cch',$channels);
+        } catch (Exception $exception ) {
+            dd($exception->getMessage());
+        }
+
 
         $deleteBefore = $this->split($crawler->delete_before);
         $deleteAfter = $this->split($crawler->delete_after);
