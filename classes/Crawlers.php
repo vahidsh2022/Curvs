@@ -465,7 +465,7 @@ class SAP_Crawlers
                 unset($networks[$network]);
             }
         }
-        dd('resovlemetwor');
+
         $final = [];
         $counter = 0;
         foreach ($networks as $network => $items) {
@@ -475,6 +475,8 @@ class SAP_Crawlers
             ];
             $configs = $this->settings->get_user_setting("sap_{$network}_options", $userId);
             $configs = array_column($configs["{$network}_keys"], null, 'channel_id');
+
+            dd('cg',$configs);
             foreach ($items as $name => $value) {
                 $limit = empty($configs[$name]['limit_value']) ? 1 : (int) $configs[$name]['limit_value'];
                 $interval = ($configs[$name]['limit_type'] == 'daily' ? 86400 : 3600) / $limit;
