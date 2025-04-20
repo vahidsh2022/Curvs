@@ -65,6 +65,7 @@ class SAP_Telegram
         $media = $quick_post->media ? json_decode($quick_post->media, true) : array();
 
         $message = str_replace('\n', "\n", $quick_post->message);
+        $message = str_replace('&zwnj;', "\xE2\x80\x8C", $message); // نیم فاصله
 
         $data = [
             'parse_mode' => 'markdown',
@@ -126,6 +127,7 @@ class SAP_Telegram
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_POSTFIELDS => json_encode($data),
+//            CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
