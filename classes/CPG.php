@@ -222,6 +222,9 @@ class SAP_CPG
                     !method_exists($this, $method)
                     || !$this->$method($cpg, $channel)
                 ) {
+                    file_put_contents($logDir . "manage_errors.log", print_r([
+                        'method exists not work'
+                    ], true),FILE_APPEND);
                     $this->common->sap_script_logs(sprintf(
                         "crawled post (%s) do not send to %s -> %s to %s",
                         $cpg['id'],
@@ -232,7 +235,9 @@ class SAP_CPG
                 }
             }
         }
-
+        file_put_contents($logDir . "manage_errors.log", print_r([
+            'after loop networks'
+        ], true),FILE_APPEND);
         REST($cpg);
     }
 
