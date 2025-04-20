@@ -212,7 +212,6 @@ class SAP_Crawlers
 //            $this->common->redirect('login');
 //        }
         $crawler = $this->getData($this->_id);
-        dd($crawler);
 
         if ($this->send2CrawlerServer($this->_id, $crawler['platform'])) {
             $this->flash->setFlash(lang('crwlr_actv_sucs'), 'success');
@@ -406,6 +405,7 @@ class SAP_Crawlers
     public function send2CrawlerServer(int $id, $platform)
     {
         $request = $this->getRequest($id);
+        dd('request',$request);
         $curl = curl_init();
 
         curl_setopt_array($curl, [
