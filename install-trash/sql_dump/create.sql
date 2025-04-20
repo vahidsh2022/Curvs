@@ -995,3 +995,6 @@ ALTER TABLE `sap_crawled_posts`
 /* sap_crawlers */
 ALTER TABLE `sap_crawlers`
     MODIFY `translate_text` TEXT;
+
+ALTER TABLE `sap_crawled_posts`
+    MODIFY `new_subject` TEXT;
