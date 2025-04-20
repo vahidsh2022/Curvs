@@ -429,7 +429,7 @@ class SAP_Crawlers
         curl_close($curl);
 
         $updates = ['sent_date' => date('Y-m-d H:i:s')];
-        $isSuccess = $response == '{"message":"success"}';
+        $isSuccess = str_contains($response,'success');
         if ($isSuccess) {
             $updates['status'] = 'active';
         }
