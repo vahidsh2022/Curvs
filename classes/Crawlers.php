@@ -138,7 +138,8 @@ class SAP_Crawlers
                 $crawler['status'],
                 $crawler['translation_language'],
                 $crawler['created_date'],
-                '<a href="' . $router->generate('crawlers_edit', ['id' => $crawler['id']]) . '" data-toggle="tooltip" title="Edit" data-placement="top"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><i class="fa fa-bolt active-this" data-id="' . $crawler['id'] . '" title="Active"></i>',
+//                '<a href="' . $router->generate('crawlers_edit', ['id' => $crawler['id']]) . '" data-toggle="tooltip" title="Edit" data-placement="top"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><i class="fa fa-bolt active-this" data-id="' . $crawler['id'] . '" title="Active"></i>',
+                '<i class="fa fa-bolt active-this" data-id="' . $crawler['id'] . '" title="Active"></i>',
             ];
         }
         echo json_encode([
