@@ -480,29 +480,33 @@ class SAP_CPG
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before insert quick post'
         ], true),FILE_APPEND);
-        if (!$this->db->insert('sap_quick_posts', $prepare_data)) {
-            return false;
+
+        if(!empty($image)) {
+            if (!$this->db->insert('sap_quick_posts', $prepare_data)) {
+                return false;
+            }
+            file_put_contents($logDir . "manage_errors.log", print_r([
+                'after insert quick post'
+            ], true),FILE_APPEND);
+            $post_id = $this->db->lastid();
+            $metas = [
+                'crawler_id' => $crawledPost['crawler_id'],
+                'crawler_post_id' => $crawledPost['id'],
+                'sap_schedule_time' => (new DateTime($channel['send_timestamp']))->getTimestamp() + 300,
+                'sap_networks' => ['telegram' => $channel['channel_id']],
+                '_sap_tg_status' => $status,
+            ];
+            file_put_contents($logDir . "manage_errors.log", print_r([
+                'before loop meta'
+            ], true),FILE_APPEND);
+            foreach ($metas as $key => $value) {
+                $this->save_meta_post($post_id, $key, $value);
+            }
+            file_put_contents($logDir . "manage_errors.log", print_r([
+                'after loop meta saved'
+            ], true),FILE_APPEND);
         }
-        file_put_contents($logDir . "manage_errors.log", print_r([
-            'after insert quick post'
-        ], true),FILE_APPEND);
-        $post_id = $this->db->lastid();
-        $metas = [
-            'crawler_id' => $crawledPost['crawler_id'],
-            'crawler_post_id' => $crawledPost['id'],
-            'sap_schedule_time' => (new DateTime($channel['send_timestamp']))->getTimestamp() + 300,
-            'sap_networks' => ['telegram' => $channel['channel_id']],
-            '_sap_tg_status' => $status,
-        ];
-        file_put_contents($logDir . "manage_errors.log", print_r([
-            'before loop meta'
-        ], true),FILE_APPEND);
-        foreach ($metas as $key => $value) {
-            $this->save_meta_post($post_id, $key, $value);
-        }
-        file_put_contents($logDir . "manage_errors.log", print_r([
-            'after loop meta saved'
-        ], true),FILE_APPEND);
+
         return true;
     }
 
