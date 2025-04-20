@@ -404,8 +404,13 @@ class SAP_Crawlers
 
     public function send2CrawlerServer(int $id, $platform)
     {
-        $request = $this->getRequest($id);
-        dd('request',$request);
+        try {
+            $request = $this->getRequest($id);
+            dd('request',$request);
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
+
         $curl = curl_init();
 
         curl_setopt_array($curl, [
