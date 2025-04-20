@@ -264,6 +264,9 @@ $all_logs = $this->get_logs();
                             if (result.status) {
                                 $('#log_' + log_id).remove();
                                 $(success_html).insertBefore(".content .row .col-md-12 .box");
+                                setTimeout(() => {
+                                    $('.alert.alert-success').remove();
+                                }, 2000); //
                                 if ($("#logs-listing tbody tr").length == 0) {
                                     $("#logs-listing").find('tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><?php echo $sap_common->lang("no_data_available_in_table"); ?></td></tr>');
                                 }

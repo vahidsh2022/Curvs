@@ -84,40 +84,45 @@ $cpgs = $this->getCpgs();
                         </div>
                         <div class="post-wrapper-one">
                             <?php foreach ($this->limitPosts($posts) as $post) { ?>
-                            <div class="post-item">
-                                <?php if (!empty($post->image)) { ?>
-                                    <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
-                                         alt="Post Image single">
-                                <?php } else if (!empty($post->video)) { ?>
-                                    <video width="auto" height="100%" controls aria-label="video single">
-                                        <source src="<?php echo SAP_IMG_URL . $post->video; ?>" type="video/mp4">
-                                    </video>
-                                <?php } else if (!empty($post->media) && !empty(json_decode($post->media, true))) {
-                                $firstMedia = SAP_IMG_URL . json_decode($post->media, true)[0]['src'];
-                                if (mediaIsImage($firstMedia)) {
-                                    ?>
-                                    <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
-                                         alt="Post Image">
-                                    <?php
-                                } else if (mediaIsVideo($firstMedia)) {
+                                <div class="post-item">
+                                    <?php if (!empty($post->image)) { ?>
+                                        <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
+                                             alt="Post Image single">
+                                    <?php } else if (!empty($post->video)) { ?>
+                                        <video width="100px" height="100%"  aria-label="video single" style="margin-right: 10px">
+                                            <source src="<?php echo SAP_IMG_URL . $post->video; ?>" type="video/mp4">
+                                        </video>
+                                    <?php } else if (!empty($post->media) && !empty(json_decode($post->media, true))) {
+                                        $firstMedia = SAP_IMG_URL . json_decode($post->media, true)[0]['src'];
+                                        if (mediaIsImage($firstMedia)) {
+                                            ?>
+                                            <img src="<?php echo $this->imageLoader(SAP_IMG_URL . $post->image) ?>"
+                                                 alt="Post Image">
+                                            <?php
+                                        } else if (mediaIsVideo($firstMedia)) {
 
-                                    ?>
-                                    <video width="auto" height="100%" controls>
-                                        <source src="<?php echo SAP_IMG_URL . json_decode($post->media, true)[0]['src']; ?>"
-                                                type="video/mp4">
-                                    </video>
-                                <?php }} ?>
+                                            ?>
+                                            <video width="auto" height="100%" controls>
+                                                <source src="<?php echo SAP_IMG_URL . json_decode($post->media, true)[0]['src']; ?>"
+                                                        type="video/mp4">
+                                            </video>
+                                        <?php }} ?>
 
-                                <div class="post-content">
-                                    <p class="fw-bold">
-                                        <a href='<?php echo $router->generate('quick_viewpost', ['id' => $post->post_id]); ?>'><?php echo $post->message ?></a>
-                                    </p>
-                                    <div class="date-time">
-                                        <?php echo $post->created_date ?>
+                                    <div class="post-content">
+                                        <p class="fw-bold">
+                                            <a style="display: -webkit-box;
+                                            -webkit-line-clamp: 5;
+                                            -webkit-box-orient: vertical;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;"
+                                               href='<?php echo $router->generate('quick_viewpost', ['id' => $post->post_id]); ?>'><?php echo $post->message ?></a>
+                                        </p>
+                                        <div class="date-time">
+                                            <?php echo $post->created_date ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4">
@@ -129,7 +134,7 @@ $cpgs = $this->getCpgs();
                                         <?php foreach ($groupedCrawlers as $platform => $crawlers) { ?>
                                             <div class="info-row">
                                             <span class="info-label fw-bold">
-                                            <img src="<?php echo $this->socialIconByPlatform($platform) ?>"
+                                            <img width="24px" src="<?php echo $this->socialIconByPlatform($platform) ?>"
                                                  alt="<?php echo $platform ?>">
                                                                                       <?php echo ucfirst($platform) ?>
 
@@ -153,7 +158,12 @@ $cpgs = $this->getCpgs();
                                     <?php } ?>
                                     <div class="post-content">
                                         <p class="fw-bold">
-                                            <a href='<?php echo $router->generate('quick_posts_add_from_cpg', ['cpg_id' => $cpg->id]); ?>'><?php echo $post->message ?></a>
+                                            <a style="display: -webkit-box;
+                                                      -webkit-line-clamp: 5;
+                                                      -webkit-box-orient: vertical;
+                                                      overflow: hidden;
+                                                      text-overflow: ellipsis;"
+                                               href='<?php echo $router->generate('quick_posts_add_from_cpg', ['cpg_id' => $cpg->id]); ?>'><?php echo $post->message ?></a>
                                         </p>
                                         <div class="date-time">
                                             <?php echo $cpg->created_at ?>
