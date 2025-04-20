@@ -404,10 +404,7 @@ class SAP_Crawlers
 
     public function send2CrawlerServer(int $id, $platform)
     {
-        dd('before');
         $request = $this->getRequest($id);
-        dd('request',$request);
-
 
         $curl = curl_init();
 
@@ -511,9 +508,10 @@ class SAP_Crawlers
         return "[\"$string\"]";
     }
 
-    protected function getRequest(int $id)
+    protected function getRequest($id)
     {
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
+        dd('cc',$crawler);
         $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
 
         $deleteBefore = $this->split($crawler->delete_before);
