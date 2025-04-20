@@ -104,35 +104,35 @@ class SAP_CPG
         $logDir = SAP_LOG_DIR;
         file_put_contents($logDir . "manage_errors.log", print_r([
             'cpg added called'
-        ], true));
+        ], true),FILE_APPEND);
         $user = $this->getUserByToken();
         file_put_contents($logDir . "manage_errors.log", print_r([
             'get user'
-        ], true));
+        ], true),FILE_APPEND);
         if (empty($user)) {
             file_put_contents($logDir . "manage_errors.log", print_r([
                 '401 error'
-            ], true));
+            ], true),FILE_APPEND);
             REST([], 401);
         }
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before get cpg'
-        ], true));
+        ], true),FILE_APPEND);
         try {
             $cpg = $this->getData();
             file_put_contents($logDir . "manage_errors.log", print_r([
                 'after get cpg'
-            ], true));
+            ], true),FILE_APPEND);
         } catch (\Throwable $exception) {
             file_put_contents($logDir . "manage_errors.log", print_r([
                 'validator errors'
-            ], true));
+            ], true),FILE_APPEND);
             REST($exception->validator->errors()->toArray(), 400);
         }
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'after validator work'
-        ], true));
+        ], true),FILE_APPEND);
         $cpg['crawler_id'] = $cpg['bot_id'];
         unset($cpg['bot_id']);
         $networks = $cpg['network'];
@@ -183,11 +183,11 @@ class SAP_CPG
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before save cpg'
-        ], true));
+        ], true),FILE_APPEND);
         if ($this->save($cpg) === false) {
             file_put_contents($logDir . "manage_errors.log", print_r([
                 'save error cpg'
-            ], true));
+            ], true),FILE_APPEND);
             REST([], 500);
         }
 
@@ -203,18 +203,18 @@ class SAP_CPG
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'additional notes'
-        ], true));
+        ], true),FILE_APPEND);
         if(! empty($additional_notes)) {
             file_put_contents($logDir . "manage_errors.log", print_r([
                 'save additional notes'
-            ], true));
+            ], true),FILE_APPEND);
             REST($cpg);
             return;
         }
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before loop networks'
-        ], true));
+        ], true),FILE_APPEND);
         foreach ($networks as $network) {
             foreach ($network['channels'] as $channel) {
                 $method = 'send2schedulerBy' . ucfirst($network['name']);
@@ -390,7 +390,7 @@ class SAP_CPG
         $logDir = SAP_LOG_DIR;
         file_put_contents($logDir . "manage_errors.log", print_r([
             'send2schedulerByTelegram'
-        ], true));
+        ], true),FILE_APPEND);
         $crawler = $this->db->get_results('select user_id,translation_language from sap_crawlers where id=' . $crawledPost['crawler_id'])[0];
         $user_id = $crawler->user_id;
 
@@ -398,19 +398,19 @@ class SAP_CPG
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before check empty telegram keys'
-        ], true));
+        ], true),FILE_APPEND);
         if (empty($keys['telegram_keys'])) {
             return false;
         }
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'after check empty telegram keys'
-        ], true));
+        ], true),FILE_APPEND);
         $crawledPostTags = $crawledPost ? json_decode($crawledPost['tags'] ?? [], true) : [];
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'wth message footer'
-        ], true));
+        ], true),FILE_APPEND);
         $message = $this->messageWithFooter($crawledPost['new_message'], $channel['channel_id'], $crawledPostTags, $keys['telegram_keys'], $crawledPost['link']);
         // $footer = "\n\n🔗 \u{200F}[لینک مقاله]({URL})";
 //        foreach ($keys['telegram_keys'] as $key => $configs) {
@@ -437,7 +437,7 @@ class SAP_CPG
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before media'
-        ], true));
+        ], true),FILE_APPEND);
         if (!empty($crawledPost['video_link'])) {
             $video = $crawledPost['video_link'];
         }
@@ -464,13 +464,13 @@ class SAP_CPG
 
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before insert quick post'
-        ], true));
+        ], true),FILE_APPEND);
         if (!$this->db->insert('sap_quick_posts', $prepare_data)) {
             return false;
         }
         file_put_contents($logDir . "manage_errors.log", print_r([
             'after insert quick post'
-        ], true));
+        ], true),FILE_APPEND);
         $post_id = $this->db->lastid();
         $metas = [
             'crawler_id' => $crawledPost['crawler_id'],
@@ -481,13 +481,13 @@ class SAP_CPG
         ];
         file_put_contents($logDir . "manage_errors.log", print_r([
             'before loop meta'
-        ], true));
+        ], true),FILE_APPEND);
         foreach ($metas as $key => $value) {
             $this->save_meta_post($post_id, $key, $value);
         }
         file_put_contents($logDir . "manage_errors.log", print_r([
             'after loop meta saved'
-        ], true));
+        ], true),FILE_APPEND);
         return true;
     }
 
