@@ -96,6 +96,18 @@ class SAP_CPG
 
     protected function save($data)
     {
+        $escapeColumns = [
+            'original_subject',
+            'original_message',
+            'new_message',
+            'tags'
+        ];
+
+        foreach ($escapeColumns as $column) {
+            if (isset($data[$column])) {
+                $data[$column] = $this->db->escape($data);
+            }
+        }
         return $this->db->insert($this->table, $data);
     }
 
