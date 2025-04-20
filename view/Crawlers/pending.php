@@ -115,19 +115,8 @@ include SAP_APP_PATH . 'sidebar.php';
 
         $('body').on('click', '.active-this', function () {
             if (confirm('do you active this?')) {
-                jQuery.ajax({
-                    url: '../pendings/active/' + $(this).data('id'),
-                    method: 'GET',
-                    success: function(response) {
-                        console.log('Request succeeded: ', response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error occurred:', error);
-                        console.log('Status:', status);
-                        console.log('Response:', xhr.responseText);
-                    }
-                });
-                // location.href = location.href;
+                jQuery.ajax('../pendings/active/' + $(this).data('id'));
+                location.href = location.href;
             }
         });
     });
