@@ -233,6 +233,7 @@ $router->map('GET','/admin-dashboard/','Dashboard#admin','admin');
 ///> a REST API for developing purposes
 $router->map('POST', '/temp/', 'Temp#index', 'temp');
 $router->map('GET','/tester/send_quick_post_to_telegram/[i:id]/','Tester#send_quick_post_to_telegram', 'tester_send_quick_post');
+$router->map('GET','/tester/get_request_crawler_format/[i:id]/','Tester#get_request_crawler_format', 'tester_get_request_crawler_format');
 
 //Add route END
 $match = $router->match();

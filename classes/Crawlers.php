@@ -510,7 +510,7 @@ class SAP_Crawlers
         return "[\"$string\"]";
     }
 
-    protected function getRequest(int $id)
+    public function getRequest(int $id)
     {
 
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];

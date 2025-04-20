@@ -20,4 +20,16 @@ class SAP_Tester
         REST($res);
     }
 
+    public function get_request_crawler_format()
+    {
+        global $match;
+        if(! class_exists('SAP_Crawlers')) {
+            require_once ( CLASS_PATH . 'Crawlers.php');
+        }
+        $crawlers = new SAP_Crawlers();
+
+        dd($crawlers->getRequest($match['params']['id']));
+
+    }
+
 }
