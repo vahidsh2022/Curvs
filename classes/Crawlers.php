@@ -512,6 +512,7 @@ class SAP_Crawlers
 
     protected function getRequest(int $id)
     {
+
         $crawler = $this->db->get_results("select * from {$this->table} where id = $id")[0];
         $channels = json_encode($this->resolveSpaces(unserialize($crawler->networks), $crawler->user_id));
 
